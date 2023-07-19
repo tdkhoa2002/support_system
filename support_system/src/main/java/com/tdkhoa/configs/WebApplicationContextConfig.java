@@ -21,7 +21,11 @@ import org.springframework.web.servlet.view.JstlView;
  */
 @Configuration
 @EnableWebMvc
-@ComponentScan(basePackages = "com.tdkhoa.controllers")
+@ComponentScan(basePackages = {
+    "com.tdkhoa.controllers",
+    "com.tdkhoa.repository",
+    "com.tdkhoa.services"
+})
 public class WebApplicationContextConfig implements WebMvcConfigurer {
 
     @Override

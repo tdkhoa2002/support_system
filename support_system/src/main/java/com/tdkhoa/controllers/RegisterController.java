@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.*;
 public class RegisterController {
     @Autowired
     private PasswordEncoder passwordEncoder;
-//    @Autowired
-//    private UserService userService;
+    @Autowired
+    private UserService userService;
 
     @GetMapping
     public String index() {
@@ -26,7 +26,7 @@ public class RegisterController {
         String msg = "";
         String username = user.getUsername();
         String password = user.getPassword();
-        String confirm_password = user.getConfirm_password();
+        String confirm_password = user.getConfirmPassword();
         String email = user.getEmail();
         String encodedPassword = passwordEncoder.encode(password);
         if (password.equalsIgnoreCase(confirm_password)) {
@@ -34,14 +34,14 @@ public class RegisterController {
             if (password.length() < 8) {
                 msg = "Mật khẩu không được nhỏ hơn 8 ký tự";
             } else {
-//                user.setUsername(username);
-//                user.setPassword(encodedPassword);
-//                user.setEmail(email);
-//                user = this.userService.addUser(user);
+                user.setUsername(username);
+                user.setPassword(encodedPassword);
+                user.setEmail(email);
+                user = this.userService.addUser(user);
                 return "login";
             }
         } else {
-            msg = "Xác nhận mật khẩu không đúng";
+            msg = confirm_password;
         }
         model.addAttribute("message", msg);
         return "register";

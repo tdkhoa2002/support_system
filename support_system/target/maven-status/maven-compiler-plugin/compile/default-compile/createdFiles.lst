@@ -1,5 +1,3 @@
-com\tdkhoa\pojo\User.class
 com\tdkhoa\configs\DispatcherServletInitializer.class
-com\tdkhoa\configs\WebApplicationContextConfig.class
-com\tdkhoa\pojo\Role.class
 com\tdkhoa\controllers\HomeController.class
+com\tdkhoa\configs\WebApplicationContextConfig.class

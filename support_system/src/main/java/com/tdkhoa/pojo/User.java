@@ -15,6 +15,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
@@ -22,6 +23,7 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @Table(name = "user")
+@XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "User.findAll", query = "SELECT u FROM User u"),
     @NamedQuery(name = "User.findById", query = "SELECT u FROM User u WHERE u.id = :id"),
@@ -47,11 +49,9 @@ public class User implements Serializable {
     @Size(max = 45)
     @Column(name = "email")
     private String email;
-    @Size(max = 45)
     @Column(name = "role_id")
-    private String roleId;
-
-    private String confirm_password;
+    private Integer roleId;
+    private String confirmPassword;
 
     public User() {
     }
@@ -92,11 +92,11 @@ public class User implements Serializable {
         this.email = email;
     }
 
-    public String getRoleId() {
+    public Integer getRoleId() {
         return roleId;
     }
 
-    public void setRoleId(String roleId) {
+    public void setRoleId(Integer roleId) {
         this.roleId = roleId;
     }
 
@@ -125,11 +125,19 @@ public class User implements Serializable {
         return "com.tdkhoa.pojo.User[ id=" + id + " ]";
     }
 
-    public String getConfirm_password() {
-        return confirm_password;
+    /**
+     * @return the confirmPassword
+     */
+    public String getConfirmPassword() {
+        return confirmPassword;
     }
 
-    public void setConfirm_password(String confirm_password) {
-        this.confirm_password = confirm_password;
+    /**
+     * @param confirmPassword the confirmPassword to set
+     */
+    public void setConfirmPassword(String confirmPassword) {
+        this.confirmPassword = confirmPassword;
     }
+    
+    
 }

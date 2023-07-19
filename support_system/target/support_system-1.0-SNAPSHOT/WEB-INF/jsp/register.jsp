@@ -24,7 +24,7 @@
         </div>
         <div>
             <label>Xác nhận mật khẩu: </label>
-            <input type="password" name="confirm_password" placeholder="Xác nhận mật khẩu" max="16">
+            <input type="password" name="confirmPassword" placeholder="Xác nhận mật khẩu" max="16">
         </div>
         <div>
             <label>Email: </label>
