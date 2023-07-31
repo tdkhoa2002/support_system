@@ -6,12 +6,14 @@ package com.tdkhoa.services;
 
 import java.util.List;
 import com.tdkhoa.pojo.User;
+import org.springframework.security.core.userdetails.UserDetailsService;
 
 /**
  *
  * @author Khoa Tran
  */
-public interface UserService {
+public interface UserService extends UserDetailsService {
     List<User> getUsers();
-    User addUser(User user);
+    boolean addOrUpdateUser(User user);
+    
 }

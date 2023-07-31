@@ -5,17 +5,26 @@
 package com.tdkhoa.pojo;
 
 import java.io.Serializable;
+import java.util.Set;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
@@ -30,7 +39,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "User.findByUsername", query = "SELECT u FROM User u WHERE u.username = :username"),
     @NamedQuery(name = "User.findByPassword", query = "SELECT u FROM User u WHERE u.password = :password"),
     @NamedQuery(name = "User.findByEmail", query = "SELECT u FROM User u WHERE u.email = :email"),
-    @NamedQuery(name = "User.findByRoleId", query = "SELECT u FROM User u WHERE u.roleId = :roleId")})
+    @NamedQuery(name = "User.findByAvatar", query = "SELECT u FROM User u WHERE u.avatar = :avatar")})
 public class User implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -39,25 +48,52 @@ public class User implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Size(max = 45)
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 255)
     @Column(name = "username")
     private String username;
-    @Size(max = 45)
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 255)
     @Column(name = "password")
     private String password;
     // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
-    @Size(max = 45)
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 255)
     @Column(name = "email")
     private String email;
-    @Column(name = "role_id")
-    private Integer roleId;
-    private String confirmPassword;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 255)
+    @Column(name = "avatar")
+    private String avatar;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
+    private Set<Question> questionSet;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
+    private Set<Comment> commentSet;
+    @JoinColumn(name = "role_id", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private Role roleId;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
+    private Set<Article> articleSet;
+    @Transient
+    private MultipartFile file; 
 
     public User() {
     }
 
     public User(Integer id) {
         this.id = id;
+    }
+
+    public User(Integer id, String username, String password, String email, String avatar) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.avatar = avatar;
     }
 
     public Integer getId() {
@@ -92,12 +128,47 @@ public class User implements Serializable {
         this.email = email;
     }
 
-    public Integer getRoleId() {
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
+    @XmlTransient
+    public Set<Question> getQuestionSet() {
+        return questionSet;
+    }
+
+    public void setQuestionSet(Set<Question> questionSet) {
+        this.questionSet = questionSet;
+    }
+
+    @XmlTransient
+    public Set<Comment> getCommentSet() {
+        return commentSet;
+    }
+
+    public void setCommentSet(Set<Comment> commentSet) {
+        this.commentSet = commentSet;
+    }
+
+    public Role getRoleId() {
         return roleId;
     }
 
-    public void setRoleId(Integer roleId) {
+    public void setRoleId(Role roleId) {
         this.roleId = roleId;
+    }
+
+    @XmlTransient
+    public Set<Article> getArticleSet() {
+        return articleSet;
+    }
+
+    public void setArticleSet(Set<Article> articleSet) {
+        this.articleSet = articleSet;
     }
 
     @Override
@@ -126,18 +197,17 @@ public class User implements Serializable {
     }
 
     /**
-     * @return the confirmPassword
+     * @return the file
      */
-    public String getConfirmPassword() {
-        return confirmPassword;
+    public MultipartFile getFile() {
+        return file;
     }
 
     /**
-     * @param confirmPassword the confirmPassword to set
+     * @param file the file to set
      */
-    public void setConfirmPassword(String confirmPassword) {
-        this.confirmPassword = confirmPassword;
+    public void setFile(MultipartFile file) {
+        this.file = file;
     }
-    
     
 }

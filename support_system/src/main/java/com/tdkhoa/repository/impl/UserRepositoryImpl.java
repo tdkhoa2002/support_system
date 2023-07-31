@@ -7,6 +7,7 @@ package com.tdkhoa.repository.impl;
 import com.tdkhoa.pojo.User;
 import com.tdkhoa.repository.UserRepository;
 import java.util.List;
+import javax.persistence.Query;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,20 +26,39 @@ public class UserRepositoryImpl implements UserRepository{
     private LocalSessionFactoryBean factory;
 
     @Override
-    public User addUser(User user) {
+    public boolean addOrUpdateUser(User user) {
         Session s = this.factory.getObject().getCurrentSession();
         try {
-            s.save(user);
-            return user;
+            if (user.getId() == null) {
+                s.save(user);
+            } else {
+                s.update(user);
+            }
+            return true;
         } catch (HibernateException ex) {
             ex.printStackTrace();
-            return null;
+            return false;
         }
     }
 
     @Override
     public List<User> getUsers(String username) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public User getUser(int id) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public String getRoleOfUser(User user) {
+        Session s = this.factory.getObject().getCurrentSession();
+        String nameRole;
+//        nameRole = 
+        Query query = s.createQuery("FROM Role where id = :id");
+        query.setParameter("id", user.getId());
+        return (String) query.getSingleResult();
     }
     
 }

@@ -17,6 +17,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -26,13 +27,13 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author Khoa Tran
  */
 @Entity
-@Table(name = "role")
+@Table(name = "category")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Role.findAll", query = "SELECT r FROM Role r"),
-    @NamedQuery(name = "Role.findById", query = "SELECT r FROM Role r WHERE r.id = :id"),
-    @NamedQuery(name = "Role.findByName", query = "SELECT r FROM Role r WHERE r.name = :name")})
-public class Role implements Serializable {
+    @NamedQuery(name = "Category.findAll", query = "SELECT c FROM Category c"),
+    @NamedQuery(name = "Category.findById", query = "SELECT c FROM Category c WHERE c.id = :id"),
+    @NamedQuery(name = "Category.findByName", query = "SELECT c FROM Category c WHERE c.name = :name")})
+public class Category implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -40,17 +41,26 @@ public class Role implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Size(max = 45)
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 45)
     @Column(name = "name")
     private String name;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "roleId")
-    private Set<User> userSet;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "categoryId")
+    private Set<Score> scoreSet;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "categoryId")
+    private Set<Article> articleSet;
 
-    public Role() {
+    public Category() {
     }
 
-    public Role(Integer id) {
+    public Category(Integer id) {
         this.id = id;
+    }
+
+    public Category(Integer id, String name) {
+        this.id = id;
+        this.name = name;
     }
 
     public Integer getId() {
@@ -70,12 +80,21 @@ public class Role implements Serializable {
     }
 
     @XmlTransient
-    public Set<User> getUserSet() {
-        return userSet;
+    public Set<Score> getScoreSet() {
+        return scoreSet;
     }
 
-    public void setUserSet(Set<User> userSet) {
-        this.userSet = userSet;
+    public void setScoreSet(Set<Score> scoreSet) {
+        this.scoreSet = scoreSet;
+    }
+
+    @XmlTransient
+    public Set<Article> getArticleSet() {
+        return articleSet;
+    }
+
+    public void setArticleSet(Set<Article> articleSet) {
+        this.articleSet = articleSet;
     }
 
     @Override
@@ -88,10 +107,10 @@ public class Role implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Role)) {
+        if (!(object instanceof Category)) {
             return false;
         }
-        Role other = (Role) object;
+        Category other = (Category) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -100,7 +119,7 @@ public class Role implements Serializable {
 
     @Override
     public String toString() {
-        return "com.tdkhoa.pojo.Role[ id=" + id + " ]";
+        return "com.tdkhoa.pojo.Category[ id=" + id + " ]";
     }
     
 }

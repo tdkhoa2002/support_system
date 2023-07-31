@@ -2,9 +2,14 @@
 <persistence version="2.2" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd">
   <!-- Define Persistence Unit -->
   <persistence-unit name="my_persistence_unit">
-    <class>com.tdkhoa.pojo.Users</class>
-    <class>com.tdkhoa.pojo.Roles</class>
     <class>com.tdkhoa.pojo.Role</class>
     <class>com.tdkhoa.pojo.User</class>
+    <class>com.tdkhoa.pojo.Article</class>
+    <class>com.tdkhoa.pojo.Faculty</class>
+    <class>com.tdkhoa.pojo.Category</class>
+    <class>com.tdkhoa.pojo.Question</class>
+    <class>com.tdkhoa.pojo.Comment</class>
+    <class>com.tdkhoa.pojo.Score</class>
+    <class>com.tdkhoa.pojo.Livestream</class>
   </persistence-unit>
 </persistence>

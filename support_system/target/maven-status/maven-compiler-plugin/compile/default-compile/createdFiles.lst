@@ -1,3 +1,11 @@
-com\tdkhoa\configs\DispatcherServletInitializer.class
 com\tdkhoa\controllers\HomeController.class
+com\tdkhoa\repository\UserRepository.class
+com\tdkhoa\controllers\RegisterController.class
 com\tdkhoa\configs\WebApplicationContextConfig.class
+com\tdkhoa\configs\HibernateConfig.class
+com\tdkhoa\configs\DispatcherServletInitializer.class
+com\tdkhoa\services\UserService.class
+com\tdkhoa\services\impl\UserServiceImpl.class
+com\tdkhoa\repository\impl\UserRepositoryImpl.class
+com\tdkhoa\pojo\User.class
+com\tdkhoa\pojo\Role.class

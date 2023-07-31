@@ -7,31 +7,28 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
-<head>
-    <title>Đăng ký</title>
-</head>
-<body>
-    <h1>Đăng ký tài khoản</h1>
-    <form:form method="POST">
-        <div>
-            <label>Tên đăng nhập: </label>
-            <input type="text" name="username" placeholder="Tên đăng nhập">
-        </div>
-        <div>
-            <label>Mật khẩu: </label>
-            <input type="password" name="password" placeholder="Mật khẩu" max="16">
-        </div>
-        <div>
-            <label>Xác nhận mật khẩu: </label>
-            <input type="password" name="confirmPassword" placeholder="Xác nhận mật khẩu" max="16">
-        </div>
-        <div>
-            <label>Email: </label>
-            <input type="email" name="email" placeholder="Email">
-        </div>
-        <button type="submit">Đăng ký</button>
-    </form:form>
-    <p>${ message }</p>
-</body>
+    <head>
+        <title>Đăng ký</title>
+    </head>
+    <body>
+        <h1>Đăng ký tài khoản</h1>
+        <c:url value="/register" var="action"/>
+        <form:form action="${action}" modelAttribute="user" method="POST" >
+            <div>
+                <label>Username: </label>
+                <form:input path="username" />
+            </div>
+            <div>
+                <label>Password: </label>
+                <form:input path="password" />
+            </div>
+            <div>
+                <label>Avatar: </label>
+                <form:input type="file" path="file" />
+            </div>
+            <button type="submit">Submit</button>
+        </form:form>
+    </body>
 </html>
