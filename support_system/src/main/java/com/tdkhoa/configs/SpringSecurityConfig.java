@@ -64,7 +64,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.formLogin().loginPage("/login/")
+        http.formLogin().loginPage("/login")
                 .usernameParameter("username")
                 .passwordParameter("password");
 
@@ -78,7 +78,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 //        http.authorizeRequests().antMatchers("/register/").permitAll()
 //                .antMatchers("/admin/").access("hasAnyAuthority('ADMIN', 'EMPLOYEE')");
 //
-//        http.exceptionHandling().accessDeniedPage("/login/?accessDenied");
+        http.exceptionHandling().accessDeniedPage("/login/?accessDenied");
 //
 //        http.authorizeRequests().antMatchers("/register/**")
 //                .access("hasAnyAuthority('ADMIN')");

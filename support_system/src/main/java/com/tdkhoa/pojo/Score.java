@@ -24,7 +24,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Khoa Tran
+ * @author ADMIN
  */
 @Entity
 @Table(name = "score")

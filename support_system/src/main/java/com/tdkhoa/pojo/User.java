@@ -19,16 +19,14 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
-import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
- * @author Khoa Tran
+ * @author ADMIN
  */
 @Entity
 @Table(name = "user")
@@ -39,7 +37,8 @@ import org.springframework.web.multipart.MultipartFile;
     @NamedQuery(name = "User.findByUsername", query = "SELECT u FROM User u WHERE u.username = :username"),
     @NamedQuery(name = "User.findByPassword", query = "SELECT u FROM User u WHERE u.password = :password"),
     @NamedQuery(name = "User.findByEmail", query = "SELECT u FROM User u WHERE u.email = :email"),
-    @NamedQuery(name = "User.findByAvatar", query = "SELECT u FROM User u WHERE u.avatar = :avatar")})
+    @NamedQuery(name = "User.findByAvatar", query = "SELECT u FROM User u WHERE u.avatar = :avatar"),
+    @NamedQuery(name = "User.findByRole", query = "SELECT u FROM User u WHERE u.role = :role")})
 public class User implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -69,6 +68,9 @@ public class User implements Serializable {
     @Size(min = 1, max = 255)
     @Column(name = "avatar")
     private String avatar;
+    @Size(max = 45)
+    @Column(name = "role")
+    private String role;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
     private Set<Question> questionSet;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
@@ -78,8 +80,6 @@ public class User implements Serializable {
     private Role roleId;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
     private Set<Article> articleSet;
-    @Transient
-    private MultipartFile file; 
 
     public User() {
     }
@@ -134,6 +134,14 @@ public class User implements Serializable {
 
     public void setAvatar(String avatar) {
         this.avatar = avatar;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 
     @XmlTransient
@@ -194,20 +202,6 @@ public class User implements Serializable {
     @Override
     public String toString() {
         return "com.tdkhoa.pojo.User[ id=" + id + " ]";
-    }
-
-    /**
-     * @return the file
-     */
-    public MultipartFile getFile() {
-        return file;
-    }
-
-    /**
-     * @param file the file to set
-     */
-    public void setFile(MultipartFile file) {
-        this.file = file;
     }
     
 }

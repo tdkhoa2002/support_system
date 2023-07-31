@@ -8,14 +8,14 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<!--<html>
+<html>
 <head>
     <title>Đăng nhập</title>
 </head>
 <body>
     <h1>Đăng nhập</h1>
     <c:url value="/login" var="action"/>
-    <form:form action="${action}" method="POST" modelAttribute="user">
+    <form:form action="${action}" method="post" modelAttribute="user">
         <div>
             <label>Username: </label>
             <form:input type="text" path="username" />
@@ -29,4 +29,4 @@
         </div>
     </form:form>
 </body>
-</html>-->
+</html>

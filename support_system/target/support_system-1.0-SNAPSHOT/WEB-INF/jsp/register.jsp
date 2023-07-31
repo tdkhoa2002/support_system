@@ -26,7 +26,7 @@
             </div>
             <div>
                 <label>Avatar: </label>
-                <form:input type="file" path="file" />
+                <form:input type="file" path="avatar" />
             </div>
             <button type="submit">Submit</button>
         </form:form>

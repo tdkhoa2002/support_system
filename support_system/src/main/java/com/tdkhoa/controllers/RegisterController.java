@@ -1,5 +1,6 @@
 package com.tdkhoa.controllers;
 
+import com.tdkhoa.pojo.Role;
 import com.tdkhoa.pojo.User;
 import com.tdkhoa.services.UserService;
 import javax.validation.Valid;
@@ -27,13 +28,14 @@ public class RegisterController {
 
     @PostMapping("/register")
     public String registerUser(@ModelAttribute User user, BindingResult rs) {
-//        System.out.println("username: " + user.getUsername());
-//        System.out.println("paswword:: " + user.getPassword());
-//        MultipartFile file = user.getFile();
-//        System.out.println("avatar: " + file);
-        System.out.println("id: " + user.getId());
+        Role r=new Role();
+        r.setId(1);
         user.setAvatar("asdasdasd");
-//        userService.addOrUpdateUser(user);
+        user.setEmail("asdasdasd");
+        user.setRoleId(r);
+
+        userService.addOrUpdateUser(user);
+
         return "index";
     }
 

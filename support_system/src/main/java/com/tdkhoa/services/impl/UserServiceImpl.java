@@ -33,6 +33,8 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository userRepo;
+    
+    
     @Autowired
     private Cloudinary cloudinary;
 
@@ -55,9 +57,13 @@ public class UserServiceImpl implements UserService {
         return this.userRepo.addOrUpdateUser(user);
     }
 
+    
+    
     @Override
     public UserDetails loadUserByUsername(String string) throws UsernameNotFoundException {
         List<User> users = userRepo.getUsers(string);
+        System.out.println(users);
+        
 
         if (users.isEmpty()) {
             throw new UsernameNotFoundException("Không tồn tại!");
@@ -65,10 +71,9 @@ public class UserServiceImpl implements UserService {
 
         User u = userRepo.getUser((users.get(0)).getId());
         
-//        Role roleName =  get 
 
         Set<GrantedAuthority> authorities = new HashSet<>();
-        authorities.add(new SimpleGrantedAuthority(userRepo.getRoleOfUser(u)));
+        authorities.add(new SimpleGrantedAuthority(u.getRole()));
         return new org.springframework.security.core.userdetails.User(
                 u.getUsername(), u.getPassword(), authorities);
     }

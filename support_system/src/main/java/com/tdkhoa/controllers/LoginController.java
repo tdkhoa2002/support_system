@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 public class LoginController {
+    
     @GetMapping("/login")
     public String index(Model model) {
         model.addAttribute("user", new User());

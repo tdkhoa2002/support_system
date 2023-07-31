@@ -25,7 +25,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Khoa Tran
+ * @author ADMIN
  */
 @Entity
 @Table(name = "faculty")
