@@ -30,7 +30,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author ADMIN
+ * @author Khoa Tran
  */
 @Entity
 @Table(name = "article")
@@ -69,6 +69,9 @@ public class Article implements Serializable {
     @JoinColumn(name = "category_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Category categoryId;
+    @JoinColumn(name = "faculty_id", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private Faculty facultyId;
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private User userId;
@@ -134,6 +137,14 @@ public class Article implements Serializable {
 
     public void setCategoryId(Category categoryId) {
         this.categoryId = categoryId;
+    }
+
+    public Faculty getFacultyId() {
+        return facultyId;
+    }
+
+    public void setFacultyId(Faculty facultyId) {
+        this.facultyId = facultyId;
     }
 
     public User getUserId() {

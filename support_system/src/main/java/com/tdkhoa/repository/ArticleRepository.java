@@ -5,11 +5,15 @@
 package com.tdkhoa.repository;
 
 import com.tdkhoa.pojo.Article;
+import java.util.List;
 
 /**
  *
  * @author Khoa Tran
  */
 public interface ArticleRepository {
-    Article addArticle(Article article);
+    List<Article> getArticles();
+    boolean addArticle(Article article);
+    Article getArticleById(int id);
+    boolean deleteArticle(int id);
 }

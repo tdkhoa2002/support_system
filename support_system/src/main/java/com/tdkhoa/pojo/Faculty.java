@@ -25,7 +25,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author ADMIN
+ * @author Khoa Tran
  */
 @Entity
 @Table(name = "faculty")
@@ -67,6 +67,8 @@ public class Faculty implements Serializable {
     private String videoUrl;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "facultyId")
     private Set<Score> scoreSet;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "facultyId")
+    private Set<Article> articleSet;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "facultyId")
     private Set<Livestream> livestreamSet;
 
@@ -132,6 +134,15 @@ public class Faculty implements Serializable {
 
     public void setScoreSet(Set<Score> scoreSet) {
         this.scoreSet = scoreSet;
+    }
+
+    @XmlTransient
+    public Set<Article> getArticleSet() {
+        return articleSet;
+    }
+
+    public void setArticleSet(Set<Article> articleSet) {
+        this.articleSet = articleSet;
     }
 
     @XmlTransient

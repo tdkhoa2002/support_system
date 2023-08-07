@@ -34,10 +34,19 @@ public class UserRepositoryImpl implements UserRepository {
     public boolean addOrUpdateUser(User user) {
         Session s = this.factory.getObject().getCurrentSession();
 
-        s.save(user);
+        try {
+            if (user.getId() == null) {
+                s.save(user);
+            } else {
+                s.update(user);
+            }
 
-        return true;
-
+            return true;
+        } catch (HibernateException ex) {
+            ex.printStackTrace();
+        }
+        s.clear();
+        return false;
     }
 
     @Override
@@ -67,8 +76,6 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public String getRoleOfUser(User user) {
         Session s = this.factory.getObject().getCurrentSession();
-        String nameRole;
-//        nameRole = 
         Query query = s.createQuery("FROM Role where id = :id");
         query.setParameter("id", user.getId());
         return (String) query.getSingleResult();

@@ -18,14 +18,54 @@ CREATE SCHEMA IF NOT EXISTS `support_system` DEFAULT CHARACTER SET utf8mb4 COLLA
 USE `support_system` ;
 
 -- -----------------------------------------------------
--- Table `support_system`.`role`
+-- Table `support_system`.`faculty`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `support_system`.`role` (
+CREATE TABLE IF NOT EXISTS `support_system`.`faculty` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(45) NULL DEFAULT NULL,
+  `name` VARCHAR(45) NOT NULL,
+  `description` LONGTEXT NOT NULL,
+  `website_url` TEXT NOT NULL,
+  `video_url` TEXT NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 4
+AUTO_INCREMENT = 2
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `support_system`.`score`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `support_system`.`score` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `year` YEAR NOT NULL,
+  `score` DOUBLE NOT NULL,
+  `faculty_id` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_score_faculty1_idx` (`faculty_id` ASC) VISIBLE,
+  CONSTRAINT `fk_score_faculty1`
+    FOREIGN KEY (`faculty_id`)
+    REFERENCES `support_system`.`faculty` (`id`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 2
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `support_system`.`category`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `support_system`.`category` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(45) NOT NULL,
+  `score_id` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_category_score1_idx` (`score_id` ASC) VISIBLE,
+  CONSTRAINT `fk_category_score1`
+    FOREIGN KEY (`score_id`)
+    REFERENCES `support_system`.`score` (`id`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 2
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
@@ -39,28 +79,10 @@ CREATE TABLE IF NOT EXISTS `support_system`.`user` (
   `password` VARCHAR(255) NOT NULL,
   `email` VARCHAR(255) NOT NULL,
   `avatar` VARCHAR(255) NOT NULL,
-  `role_id` INT NOT NULL,
-  PRIMARY KEY (`id`),
-  INDEX `fk_user_role1_idx` (`role_id` ASC) VISIBLE,
-  CONSTRAINT `fk_user_role1`
-    FOREIGN KEY (`role_id`)
-    REFERENCES `support_system`.`role` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB
-AUTO_INCREMENT = 5
-DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci;
-
-
--- -----------------------------------------------------
--- Table `support_system`.`category`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `support_system`.`category` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(45) NOT NULL,
+  `roleName` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB
+AUTO_INCREMENT = 12
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
@@ -75,19 +97,20 @@ CREATE TABLE IF NOT EXISTS `support_system`.`article` (
   `date` DATETIME NOT NULL,
   `user_id` INT NOT NULL,
   `category_id` INT NOT NULL,
+  `faculty_id` INT NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_article_user1_idx` (`user_id` ASC) VISIBLE,
   INDEX `fk_article_category1_idx` (`category_id` ASC) VISIBLE,
-  CONSTRAINT `fk_article_user1`
-    FOREIGN KEY (`user_id`)
-    REFERENCES `support_system`.`user` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+  INDEX `fk_article_faculty1_idx` (`faculty_id` ASC) VISIBLE,
   CONSTRAINT `fk_article_category1`
     FOREIGN KEY (`category_id`)
-    REFERENCES `support_system`.`category` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    REFERENCES `support_system`.`category` (`id`),
+  CONSTRAINT `fk_article_faculty1`
+    FOREIGN KEY (`faculty_id`)
+    REFERENCES `support_system`.`faculty` (`id`),
+  CONSTRAINT `fk_article_user1`
+    FOREIGN KEY (`user_id`)
+    REFERENCES `support_system`.`user` (`id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
@@ -107,29 +130,10 @@ CREATE TABLE IF NOT EXISTS `support_system`.`comment` (
   INDEX `fk_comment_user1_idx` (`user_id` ASC) VISIBLE,
   CONSTRAINT `fk_comment_article1`
     FOREIGN KEY (`article_id`)
-    REFERENCES `support_system`.`article` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    REFERENCES `support_system`.`article` (`id`),
   CONSTRAINT `fk_comment_user1`
     FOREIGN KEY (`user_id`)
-    REFERENCES `support_system`.`user` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci;
-
-
--- -----------------------------------------------------
--- Table `support_system`.`faculty`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `support_system`.`faculty` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(45) NOT NULL,
-  `description` LONGTEXT NOT NULL,
-  `website_url` TEXT NOT NULL,
-  `video_url` TEXT NOT NULL,
-  PRIMARY KEY (`id`))
+    REFERENCES `support_system`.`user` (`id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
@@ -148,9 +152,7 @@ CREATE TABLE IF NOT EXISTS `support_system`.`livestream` (
   INDEX `fk_livestream_faculty1_idx` (`faculty_id` ASC) VISIBLE,
   CONSTRAINT `fk_livestream_faculty1`
     FOREIGN KEY (`faculty_id`)
-    REFERENCES `support_system`.`faculty` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    REFERENCES `support_system`.`faculty` (`id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
@@ -170,41 +172,10 @@ CREATE TABLE IF NOT EXISTS `support_system`.`question` (
   INDEX `fk_question_user1_idx` (`user_id` ASC) VISIBLE,
   CONSTRAINT `fk_question_livestream1`
     FOREIGN KEY (`livestream_id`)
-    REFERENCES `support_system`.`livestream` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    REFERENCES `support_system`.`livestream` (`id`),
   CONSTRAINT `fk_question_user1`
     FOREIGN KEY (`user_id`)
-    REFERENCES `support_system`.`user` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci;
-
-
--- -----------------------------------------------------
--- Table `support_system`.`score`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `support_system`.`score` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `year` DATE NOT NULL,
-  `score` DOUBLE NOT NULL,
-  `category_id` INT NOT NULL,
-  `faculty_id` INT NOT NULL,
-  PRIMARY KEY (`id`),
-  INDEX `fk_score_category1_idx` (`category_id` ASC) VISIBLE,
-  INDEX `fk_score_faculty1_idx` (`faculty_id` ASC) VISIBLE,
-  CONSTRAINT `fk_score_category1`
-    FOREIGN KEY (`category_id`)
-    REFERENCES `support_system`.`category` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_score_faculty1`
-    FOREIGN KEY (`faculty_id`)
-    REFERENCES `support_system`.`faculty` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    REFERENCES `support_system`.`user` (`id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;

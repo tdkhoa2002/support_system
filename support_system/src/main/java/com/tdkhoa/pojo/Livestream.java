@@ -30,7 +30,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author ADMIN
+ * @author Khoa Tran
  */
 @Entity
 @Table(name = "livestream")

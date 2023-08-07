@@ -14,7 +14,7 @@
     <body>
         <h1>Hello World! Welcome to website</h1>
         <button><a href="login">Đăng nhập</a></button>
-        <button><a href="/support_system/register">Đăng ký</a></button>
+        <button><a href="register">Đăng ký</a></button>
     </body>
 </html>
 

@@ -13,20 +13,20 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
- * @author ADMIN
+ * @author Khoa Tran
  */
 @Entity
 @Table(name = "user")
@@ -38,10 +38,13 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "User.findByPassword", query = "SELECT u FROM User u WHERE u.password = :password"),
     @NamedQuery(name = "User.findByEmail", query = "SELECT u FROM User u WHERE u.email = :email"),
     @NamedQuery(name = "User.findByAvatar", query = "SELECT u FROM User u WHERE u.avatar = :avatar"),
-    @NamedQuery(name = "User.findByRole", query = "SELECT u FROM User u WHERE u.role = :role")})
+    @NamedQuery(name = "User.findByRoleName", query = "SELECT u FROM User u WHERE u.roleName = :roleName")})
 public class User implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    public static String ADMIN = "ADMIN";
+    public static String ADVISOR = "ADVISOR";
+    public static String USER = "USER";
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
@@ -68,18 +71,21 @@ public class User implements Serializable {
     @Size(min = 1, max = 255)
     @Column(name = "avatar")
     private String avatar;
-    @Size(max = 45)
-    @Column(name = "role")
-    private String role;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 45)
+    @Column(name = "roleName")
+    private String roleName;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
     private Set<Question> questionSet;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
     private Set<Comment> commentSet;
-    @JoinColumn(name = "role_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private Role roleId;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
     private Set<Article> articleSet;
+    @Transient
+    private MultipartFile file;
+    @Transient
+    private String confirmPassword;
 
     public User() {
     }
@@ -88,12 +94,13 @@ public class User implements Serializable {
         this.id = id;
     }
 
-    public User(Integer id, String username, String password, String email, String avatar) {
+    public User(Integer id, String username, String password, String email, String avatar, String roleName) {
         this.id = id;
         this.username = username;
         this.password = password;
         this.email = email;
         this.avatar = avatar;
+        this.roleName = roleName;
     }
 
     public Integer getId() {
@@ -136,12 +143,12 @@ public class User implements Serializable {
         this.avatar = avatar;
     }
 
-    public String getRole() {
-        return role;
+    public String getRoleName() {
+        return roleName;
     }
 
-    public void setRole(String role) {
-        this.role = role;
+    public void setRoleName(String roleName) {
+        this.roleName = roleName;
     }
 
     @XmlTransient
@@ -160,14 +167,6 @@ public class User implements Serializable {
 
     public void setCommentSet(Set<Comment> commentSet) {
         this.commentSet = commentSet;
-    }
-
-    public Role getRoleId() {
-        return roleId;
-    }
-
-    public void setRoleId(Role roleId) {
-        this.roleId = roleId;
     }
 
     @XmlTransient
@@ -202,6 +201,34 @@ public class User implements Serializable {
     @Override
     public String toString() {
         return "com.tdkhoa.pojo.User[ id=" + id + " ]";
+    }
+
+    /**
+     * @return the file
+     */
+    public MultipartFile getFile() {
+        return file;
+    }
+
+    /**
+     * @param file the file to set
+     */
+    public void setFile(MultipartFile file) {
+        this.file = file;
+    }
+
+    /**
+     * @return the confirmPassword
+     */
+    public String getConfirmPassword() {
+        return confirmPassword;
+    }
+
+    /**
+     * @param confirmPassword the confirmPassword to set
+     */
+    public void setConfirmPassword(String confirmPassword) {
+        this.confirmPassword = confirmPassword;
     }
     
 }

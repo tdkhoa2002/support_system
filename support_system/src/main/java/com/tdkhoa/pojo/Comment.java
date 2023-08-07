@@ -26,7 +26,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author ADMIN
+ * @author Khoa Tran
  */
 @Entity
 @Table(name = "comment")

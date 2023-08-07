@@ -1,6 +1,5 @@
 package com.tdkhoa.controllers;
 
-import com.tdkhoa.pojo.Role;
 import com.tdkhoa.pojo.User;
 import com.tdkhoa.services.UserService;
 import javax.validation.Valid;
@@ -28,15 +27,9 @@ public class RegisterController {
 
     @PostMapping("/register")
     public String registerUser(@ModelAttribute User user, BindingResult rs) {
-        Role r=new Role();
-        r.setId(1);
-        user.setAvatar("asdasdasd");
-        user.setEmail("asdasdasd");
-        user.setRoleId(r);
-
         userService.addOrUpdateUser(user);
 
-        return "index";
+        return "redirect:/login";
     }
 
     public boolean isPasswordMatch(String rawPassword, String encodedPassword) {

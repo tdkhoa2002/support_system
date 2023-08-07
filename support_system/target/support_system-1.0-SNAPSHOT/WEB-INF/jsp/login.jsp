@@ -14,6 +14,11 @@
 </head>
 <body>
     <h1>Đăng nhập</h1>
+    <c:if test="${param.error != null}">
+        <div>
+            <h1>Đã có lỗi xảy ra vui lòng quay lại sau !!!</h1>
+        </div>
+    </c:if>
     <c:url value="/login" var="action"/>
     <form:form action="${action}" method="post" modelAttribute="user">
         <div>
