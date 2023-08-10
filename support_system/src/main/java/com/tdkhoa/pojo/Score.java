@@ -5,10 +5,7 @@
 package com.tdkhoa.pojo;
 
 import java.io.Serializable;
-import java.util.Date;
-import java.util.Set;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -18,13 +15,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -49,17 +42,16 @@ public class Score implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "year")
-    @Temporal(TemporalType.DATE)
-    private Date year;
-    @Basic(optional = false)
-    @NotNull
+    private int year;
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "score")
-    private double score;
+    private Double score;
+    @JoinColumn(name = "category_id", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private Category categoryId;
     @JoinColumn(name = "faculty_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Faculty facultyId;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "scoreId")
-    private Set<Category> categorySet;
 
     public Score() {
     }
@@ -68,10 +60,9 @@ public class Score implements Serializable {
         this.id = id;
     }
 
-    public Score(Integer id, Date year, double score) {
+    public Score(Integer id, int year) {
         this.id = id;
         this.year = year;
-        this.score = score;
     }
 
     public Integer getId() {
@@ -82,20 +73,28 @@ public class Score implements Serializable {
         this.id = id;
     }
 
-    public Date getYear() {
+    public int getYear() {
         return year;
     }
 
-    public void setYear(Date year) {
+    public void setYear(int year) {
         this.year = year;
     }
 
-    public double getScore() {
+    public Double getScore() {
         return score;
     }
 
-    public void setScore(double score) {
+    public void setScore(Double score) {
         this.score = score;
+    }
+
+    public Category getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(Category categoryId) {
+        this.categoryId = categoryId;
     }
 
     public Faculty getFacultyId() {
@@ -104,15 +103,6 @@ public class Score implements Serializable {
 
     public void setFacultyId(Faculty facultyId) {
         this.facultyId = facultyId;
-    }
-
-    @XmlTransient
-    public Set<Category> getCategorySet() {
-        return categorySet;
-    }
-
-    public void setCategorySet(Set<Category> categorySet) {
-        this.categorySet = categorySet;
     }
 
     @Override

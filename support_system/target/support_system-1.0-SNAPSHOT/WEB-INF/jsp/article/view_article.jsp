@@ -28,7 +28,7 @@
                 <p>${comment.content}</p>
                 <c:if test="${pageContext.request.userPrincipal.name == comment.userId.username}">
                     <c:url value="/delete_comment/${comment.id}" var="api_delete" />
-                    <button type="button" class="btn btn-danger" onclick="deleteComment('${api_delete}')">Xóa</button>
+                    <button type="button" class="btn btn-danger" onclick="deleteObject('${api_delete}')">Xóa</button>
                 </c:if>
             </div>
         </c:forEach>

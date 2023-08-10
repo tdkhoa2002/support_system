@@ -10,7 +10,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 
-<c:url value="/create_faculty" var="action" />
+<c:url value="/admin/create_faculty" var="action" />
 
 <form:form method="POST" modelAttribute="faculty" action="${action}" enctype="multipart/form-data">
     <label for="name">Tên khoa: </label>

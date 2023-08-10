@@ -41,6 +41,6 @@ public class FacultyController {
     public String create(@ModelAttribute Faculty faculty) {
         facultyService.addFaculty(faculty);
         //https://www.youtube.com/watch?v=6F6RGmVvfdM
-        return "index";
+        return "redirect: /support_system/admin/faculties";
     }
 }

@@ -4,7 +4,9 @@
  */
 package com.tdkhoa.controllers;
 
+import com.tdkhoa.pojo.Question;
 import com.tdkhoa.pojo.User;
+import com.tdkhoa.services.LiveStreamService;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -20,6 +22,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class HomeController {
     @Autowired
     private HttpSession s;
+    @Autowired
+    private LiveStreamService liveServ;
     
     @RequestMapping("/")
     public String index() {
@@ -35,6 +39,8 @@ public class HomeController {
     public String home(Model model, HttpSession session, Authentication authentication) {
         User user = (User) s.getAttribute("currentUser");
         model.addAttribute("currentUser", user);
+        model.addAttribute("livestreams", liveServ.getListLivestreams());
+        model.addAttribute("question", new Question());
         return "home_page";
     }
 }

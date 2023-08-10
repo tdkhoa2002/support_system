@@ -40,11 +40,10 @@ import org.springframework.web.multipart.MultipartFile;
     @NamedQuery(name = "User.findByAvatar", query = "SELECT u FROM User u WHERE u.avatar = :avatar"),
     @NamedQuery(name = "User.findByRoleName", query = "SELECT u FROM User u WHERE u.roleName = :roleName")})
 public class User implements Serializable {
+    public static String USER = "USER";
+    public static String ADMIN = "ADMIN";
 
     private static final long serialVersionUID = 1L;
-    public static String ADMIN = "ADMIN";
-    public static String ADVISOR = "ADVISOR";
-    public static String USER = "USER";
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
@@ -84,8 +83,6 @@ public class User implements Serializable {
     private Set<Article> articleSet;
     @Transient
     private MultipartFile file;
-    @Transient
-    private String confirmPassword;
 
     public User() {
     }
@@ -215,20 +212,6 @@ public class User implements Serializable {
      */
     public void setFile(MultipartFile file) {
         this.file = file;
-    }
-
-    /**
-     * @return the confirmPassword
-     */
-    public String getConfirmPassword() {
-        return confirmPassword;
-    }
-
-    /**
-     * @param confirmPassword the confirmPassword to set
-     */
-    public void setConfirmPassword(String confirmPassword) {
-        this.confirmPassword = confirmPassword;
     }
     
 }

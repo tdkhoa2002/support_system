@@ -81,4 +81,13 @@ public class UserRepositoryImpl implements UserRepository {
         return (String) query.getSingleResult();
     }
 
+    @Override
+    public User getUserByUsername(String username) {
+        Session s = this.factory.getObject().getCurrentSession();
+        Query q = s.createQuery("From User Where username=:un");
+        q.setParameter("un", username);
+        
+        return (User) q.getSingleResult();
+    }
+
 }

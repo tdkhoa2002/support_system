@@ -23,10 +23,12 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
@@ -39,7 +41,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Livestream.findAll", query = "SELECT l FROM Livestream l"),
     @NamedQuery(name = "Livestream.findById", query = "SELECT l FROM Livestream l WHERE l.id = :id"),
     @NamedQuery(name = "Livestream.findByDate", query = "SELECT l FROM Livestream l WHERE l.date = :date"),
-    @NamedQuery(name = "Livestream.findByTime", query = "SELECT l FROM Livestream l WHERE l.time = :time")})
+    @NamedQuery(name = "Livestream.findByTime", query = "SELECT l FROM Livestream l WHERE l.time = :time"),
+    @NamedQuery(name = "Livestream.findByThumbnail", query = "SELECT l FROM Livestream l WHERE l.thumbnail = :thumbnail")})
 public class Livestream implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -63,11 +66,18 @@ public class Livestream implements Serializable {
     @NotNull
     @Column(name = "time")
     private double time;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 255)
+    @Column(name = "thumbnail")
+    private String thumbnail;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "livestreamId")
     private Set<Question> questionSet;
     @JoinColumn(name = "faculty_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Faculty facultyId;
+    @Transient
+    private MultipartFile file;
 
     public Livestream() {
     }
@@ -76,11 +86,12 @@ public class Livestream implements Serializable {
         this.id = id;
     }
 
-    public Livestream(Integer id, String title, Date date, double time) {
+    public Livestream(Integer id, String title, Date date, double time, String thumbnail) {
         this.id = id;
         this.title = title;
         this.date = date;
         this.time = time;
+        this.thumbnail = thumbnail;
     }
 
     public Integer getId() {
@@ -113,6 +124,14 @@ public class Livestream implements Serializable {
 
     public void setTime(double time) {
         this.time = time;
+    }
+
+    public String getThumbnail() {
+        return thumbnail;
+    }
+
+    public void setThumbnail(String thumbnail) {
+        this.thumbnail = thumbnail;
     }
 
     @XmlTransient
@@ -155,6 +174,20 @@ public class Livestream implements Serializable {
     @Override
     public String toString() {
         return "com.tdkhoa.pojo.Livestream[ id=" + id + " ]";
+    }
+
+    /**
+     * @return the file
+     */
+    public MultipartFile getFile() {
+        return file;
+    }
+
+    /**
+     * @param file the file to set
+     */
+    public void setFile(MultipartFile file) {
+        this.file = file;
     }
     
 }

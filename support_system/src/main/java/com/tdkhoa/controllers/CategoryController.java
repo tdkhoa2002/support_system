@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,14 +25,20 @@ public class CategoryController {
     @Autowired
     private CategoryService cateService;
     
-    @RequestMapping("/admin/create_category")
+    @GetMapping("admin/categories")
     public String index(Model model) {
+        model.addAttribute("categories", cateService.getCategories());
+        return "category/index_category";
+    }
+    
+    @GetMapping("/admin/create_category")
+    public String create(Model model) {
         model.addAttribute("category", new Category());
-        return "admin/category/create_category";
+        return "category/create_category";
     }
     
     @PostMapping("/admin/create_category")
-    public String create(@ModelAttribute Category category, BindingResult rs) {
+    public String save(@ModelAttribute Category category, BindingResult rs) {
         cateService.addOrUpdateCategory(category);
         return "index";
     }
