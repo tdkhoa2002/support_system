@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -40,7 +41,13 @@ public class CategoryController {
     @PostMapping("/admin/create_category")
     public String save(@ModelAttribute Category category, BindingResult rs) {
         cateService.addOrUpdateCategory(category);
-        return "index";
+        return "admin_dashboard";
+    }
+    
+    @GetMapping("/admin/edit_category/{cate_id}")
+    public String edit(Model model, @PathVariable(value = "cate_id") int cate_id) {
+        model.addAttribute("category", this.cateService.getCategoryById(cate_id));
+        return "category/create_category";
     }
     
 }

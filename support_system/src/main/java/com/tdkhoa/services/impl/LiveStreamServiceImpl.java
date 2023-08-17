@@ -35,14 +35,14 @@ public class LiveStreamServiceImpl implements LiveStreamService {
 
     @Override
     public boolean addOrUpdate(Livestream livestream) {
-        if (!livestream.getFile().isEmpty()) {
-            try {
-                Map res = this.cloudinary.uploader().upload(livestream.getFile().getBytes(), ObjectUtils.asMap("resource_type", "auto"));
-                livestream.setThumbnail(res.get("secure_url").toString());
-            } catch (IOException ex) {
-                Logger.getLogger(UserServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
+//        if (!livestream.getFile().isEmpty()) {
+//            try {
+//                Map res = this.cloudinary.uploader().upload(livestream.getFile().getBytes(), ObjectUtils.asMap("resource_type", "auto"));
+//                livestream.setThumbnail(res.get("secure_url").toString());
+//            } catch (IOException ex) {
+//                Logger.getLogger(UserServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+//        }
         return this.liveRepo.addOrUpdate(livestream);
     }
 

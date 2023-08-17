@@ -12,6 +12,8 @@ import java.util.List;
  * @author Khoa Tran
  */
 public interface CategoryRepository {
-    boolean addOrUpdateCategory(Category cate);
+    Category getCategoryById(int id);
+    Category addOrUpdateCategory(Category cate);
     List<Category> getCategories();
+    boolean deleteCategory(int id);
 }

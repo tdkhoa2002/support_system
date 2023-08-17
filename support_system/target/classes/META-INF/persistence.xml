@@ -11,5 +11,7 @@
     <class>com.tdkhoa.pojo.Comment</class>
     <class>com.tdkhoa.pojo.Score</class>
     <class>com.tdkhoa.pojo.Livestream</class>
+    <class>com.tdkhoa.pojo.Major</class>
+    <class>com.tdkhoa.pojo.Banner</class>
   </persistence-unit>
 </persistence>

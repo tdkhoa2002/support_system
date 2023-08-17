@@ -12,6 +12,8 @@ import java.util.List;
  * @author Khoa Tran
  */
 public interface CategoryService {
-    boolean addOrUpdateCategory(Category cate);
+    Category addOrUpdateCategory(Category cate);
     List<Category> getCategories();
+    Category getCategoryById(int id);
+    boolean deleteCategory(int id);
 }

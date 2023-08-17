@@ -26,7 +26,7 @@ public class CategoryRepositoryImpl implements CategoryRepository{
     private LocalSessionFactoryBean factory;
 
     @Override
-    public boolean addOrUpdateCategory(Category cate) {
+    public Category addOrUpdateCategory(Category cate) {
         Session s = this.factory.getObject().getCurrentSession();
 
         try {
@@ -36,12 +36,12 @@ public class CategoryRepositoryImpl implements CategoryRepository{
                 s.update(cate);
             }
 
-            return true;
+            return cate;
         } catch (HibernateException ex) {
             ex.printStackTrace();
         }
         s.clear();
-        return false;
+        return null;
     }
 
     @Override
@@ -50,6 +50,25 @@ public class CategoryRepositoryImpl implements CategoryRepository{
         Query q = s.createQuery("SELECT c FROM Category c");
         
         return q.getResultList();
+    }
+    
+    @Override
+    public Category getCategoryById(int id) {
+        Session s = this.factory.getObject().getCurrentSession();
+        return s.get(Category.class, id);
+    }
+
+    @Override
+    public boolean deleteCategory(int id) {
+        Session s = this.factory.getObject().getCurrentSession();
+        try {
+            Category cate = this.getCategoryById(id);
+            s.delete(cate);
+            return true;
+        } catch (HibernateException ex) {
+            ex.printStackTrace();
+            return false;
+        }
     }
     
 }

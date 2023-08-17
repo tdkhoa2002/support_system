@@ -30,5 +30,10 @@ public class QuestionServiceImpl implements QuestionService {
     public List<Question> getListQuestionsByLivestreamId(Livestream livestream) {
         return this.qRepo.getListQuestionsByLivestreamId(livestream);
     }
+
+    @Override
+    public boolean deleteQuestion(int id) {
+        return this.qRepo.deleteQuestion(id);
+    }
     
 }

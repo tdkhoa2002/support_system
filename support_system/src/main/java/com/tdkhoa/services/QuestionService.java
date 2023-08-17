@@ -15,4 +15,5 @@ import java.util.List;
 public interface QuestionService {
     boolean saveOrUpdate(Question question);
     List<Question> getListQuestionsByLivestreamId(Livestream livestream);
+    boolean deleteQuestion(int id);
 }

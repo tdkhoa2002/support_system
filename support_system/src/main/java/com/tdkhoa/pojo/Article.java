@@ -4,11 +4,11 @@
  */
 package com.tdkhoa.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -23,10 +23,11 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.NotNull;
+import javax.persistence.Transient;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
@@ -39,6 +40,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Article.findAll", query = "SELECT a FROM Article a"),
     @NamedQuery(name = "Article.findById", query = "SELECT a FROM Article a WHERE a.id = :id"),
     @NamedQuery(name = "Article.findByTitle", query = "SELECT a FROM Article a WHERE a.title = :title"),
+    @NamedQuery(name = "Article.findByThumbnail", query = "SELECT a FROM Article a WHERE a.thumbnail = :thumbnail"),
     @NamedQuery(name = "Article.findByDate", query = "SELECT a FROM Article a WHERE a.date = :date")})
 public class Article implements Serializable {
 
@@ -48,46 +50,42 @@ public class Article implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 45)
+    @Size(max = 45)
     @Column(name = "title")
     private String title;
-    @Basic(optional = false)
-    @NotNull
     @Lob
-    @Size(min = 1, max = 2147483647)
+    @Size(max = 2147483647)
     @Column(name = "content")
     private String content;
-    @Basic(optional = false)
-    @NotNull
+    @Size(max = 255)
+    @Column(name = "thumbnail")
+    private String thumbnail;
     @Column(name = "date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date date;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "articleId")
+    @JsonIgnore
+    @OneToMany(mappedBy = "articleId")
     private Set<Comment> commentSet;
     @JoinColumn(name = "category_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @JsonIgnore
+    @ManyToOne
     private Category categoryId;
     @JoinColumn(name = "faculty_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @JsonIgnore
+    @ManyToOne
     private Faculty facultyId;
     @JoinColumn(name = "user_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @JsonIgnore
+    @ManyToOne
     private User userId;
+    @Transient
+    private MultipartFile file;
 
     public Article() {
     }
 
     public Article(Integer id) {
         this.id = id;
-    }
-
-    public Article(Integer id, String title, String content, Date date) {
-        this.id = id;
-        this.title = title;
-        this.content = content;
-        this.date = date;
     }
 
     public Integer getId() {
@@ -112,6 +110,14 @@ public class Article implements Serializable {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public String getThumbnail() {
+        return thumbnail;
+    }
+
+    public void setThumbnail(String thumbnail) {
+        this.thumbnail = thumbnail;
     }
 
     public Date getDate() {
@@ -178,6 +184,20 @@ public class Article implements Serializable {
     @Override
     public String toString() {
         return "com.tdkhoa.pojo.Article[ id=" + id + " ]";
+    }
+
+    /**
+     * @return the file
+     */
+    public MultipartFile getFile() {
+        return file;
+    }
+
+    /**
+     * @param file the file to set
+     */
+    public void setFile(MultipartFile file) {
+        this.file = file;
     }
     
 }

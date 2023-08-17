@@ -13,6 +13,7 @@ import java.util.List;
 public interface UserRepository {
     boolean addOrUpdateUser(User user);
     List<User> getUsers(String username);
+    List<User> getAllUsers();
     User getUser(int id);
     User getUserByUsername(String username);
     String getRoleOfUser(User user);

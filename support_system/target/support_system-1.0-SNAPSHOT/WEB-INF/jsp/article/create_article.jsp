@@ -33,7 +33,9 @@
 
         </c:forEach>
     </form:select>
-
+    <label for="file">Ảnh thumbnail: </label>
+    <form:hidden path="thumbnail"/>
+    <form:input type="file" path="file" id="file" />
 
     <input type="submit" />
 </form:form>

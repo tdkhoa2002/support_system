@@ -4,6 +4,7 @@
  */
 package com.tdkhoa.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -17,7 +18,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -40,22 +40,20 @@ public class Question implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Basic(optional = false)
-    @NotNull
     @Lob
-    @Size(min = 1, max = 65535)
+    @Size(max = 65535)
     @Column(name = "content")
     private String content;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 45)
+    @Size(max = 45)
     @Column(name = "date_submitted")
     private String dateSubmitted;
     @JoinColumn(name = "livestream_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @JsonIgnore
+    @ManyToOne
     private Livestream livestreamId;
     @JoinColumn(name = "user_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @JsonIgnore
+    @ManyToOne
     private User userId;
 
     public Question() {
@@ -63,12 +61,6 @@ public class Question implements Serializable {
 
     public Question(Integer id) {
         this.id = id;
-    }
-
-    public Question(Integer id, String content, String dateSubmitted) {
-        this.id = id;
-        this.content = content;
-        this.dateSubmitted = dateSubmitted;
     }
 
     public Integer getId() {

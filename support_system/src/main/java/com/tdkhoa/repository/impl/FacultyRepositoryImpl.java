@@ -51,5 +51,25 @@ public class FacultyRepositoryImpl implements FacultyRepository{
         
         return q.getResultList();
     }
+
+    @Override
+    public Faculty getFacultyById(int id) {
+        Session s = this.factory.getObject().getCurrentSession();
+        return s.get(Faculty.class, id);
+    }
+
+    @Override
+    public boolean deleteFaculty(int id) {
+        Session s = this.factory.getObject().getCurrentSession();
+        try {
+            Faculty faculty = this.getFacultyById(id);
+            s.delete(faculty);
+            return true;
+        } catch (HibernateException ex) {
+            ex.printStackTrace();
+            return false;
+        }
+    }
+    
     
 }

@@ -9,11 +9,11 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <h1>Trang chủ!</h1>
-<sec:authorize access=" hasRole('ADMIN') ">
+<c:if test="${currentUser.roleName == 'ADMIN'}">
     <div>
-        <a href=" <c:url value="/admin"/>  ">Admin page</a>
+        <a href=" <c:url value="/admin"/>  ">Trang chủ admin</a>
     </div>
-</sec:authorize>
+</c:if>
 <c:if test="${param.accessDenied != null}">
     <div>
         Bạn không có quyền truy cập

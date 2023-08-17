@@ -29,10 +29,10 @@
                 <td>${ faculty.websiteUrl }</td>
                 <td>${ faculty.videoUrl }</td>
                 <td>
-                    <button type="button" class="btn btn-primary"> <a href=" <c:url value="/view_article/${article.id}"/> ">Xem</a> </button>
-                    <button type="button" class="btn btn-success"> <a href=" <c:url value="/admin/edit_article/${article.id}"/> ">Sửa</a> </button>
-                    <c:url value="/delete_article/${article.id}" var="api" />
-                    <button type="button" class="btn btn-danger" onclick="deleteArticle('${api}')">Xóa</button>
+                    <button type="button" class="btn btn-primary"> <a href=" <c:url value="/api/articles/faculty/${faculty.id}"/> ">Xem</a> </button>
+                    <button type="button" class="btn btn-success"> <a href=" <c:url value="/admin/edit_faculty/${faculty.id}"/> ">Sửa</a> </button>
+                    <c:url value="/api/delete_faculty/${faculty.id}/" var="api" />
+                    <button type="button" class="btn btn-danger" onclick="deleteObject('${api}')">Xóa</button>
                 </td>
             </tr>
         </c:forEach>

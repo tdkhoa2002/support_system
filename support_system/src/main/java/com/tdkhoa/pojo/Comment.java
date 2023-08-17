@@ -4,6 +4,7 @@
  */
 package com.tdkhoa.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -20,7 +21,6 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -43,22 +43,20 @@ public class Comment implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Basic(optional = false)
-    @NotNull
     @Lob
-    @Size(min = 1, max = 2147483647)
+    @Size(max = 2147483647)
     @Column(name = "content")
     private String content;
-    @Basic(optional = false)
-    @NotNull
     @Column(name = "date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date date;
     @JoinColumn(name = "article_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @JsonIgnore
+    @ManyToOne
     private Article articleId;
     @JoinColumn(name = "user_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @JsonIgnore
+    @ManyToOne
     private User userId;
 
     public Comment() {
@@ -66,12 +64,6 @@ public class Comment implements Serializable {
 
     public Comment(Integer id) {
         this.id = id;
-    }
-
-    public Comment(Integer id, String content, Date date) {
-        this.id = id;
-        this.content = content;
-        this.date = date;
     }
 
     public Integer getId() {

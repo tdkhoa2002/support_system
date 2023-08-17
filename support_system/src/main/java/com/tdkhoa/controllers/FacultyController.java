@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -31,9 +32,15 @@ public class FacultyController {
         return "faculty/index_faculty";
     }
     
-    @RequestMapping("/admin/create_faculty")
+    @GetMapping("/admin/create_faculty")
     public String create(Model model) {
         model.addAttribute("faculty", new Faculty());
+        return "faculty/create_faculty";
+    }
+    
+    @GetMapping("/admin/edit_faculty/{faculty_id}")
+    public String edit(Model model, @PathVariable(value = "faculty_id") int faculty_id) {
+        model.addAttribute("faculty", this.facultyService.getFacultyById(faculty_id));
         return "faculty/create_faculty";
     }
     

@@ -8,4 +8,27 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <button><a href=" <c:url value="/admin/create_category" /> ">Thêm hình thức tuyển sinh</a></button>
-
+<table class="table">
+    <thead>
+        <tr>
+            <th>STT</th>
+            <th>Hình thức</th>
+            <th>Handle</th>
+        </tr>
+    </thead>
+    <tbody>
+        <c:forEach  items="${categories}" var="category">
+            <tr class="table-primary">
+                <td>${ category.id }</td>
+                <td>${ category.name }</td>
+                <td>
+                    <button type="button" class="btn btn-primary"> <a href=" <c:url value="/view_category/${category.id}"/> ">Xem</a> </button>
+                    <button type="button" class="btn btn-success"> <a href=" <c:url value="/admin/edit_category/${category.id}"/> ">Sửa</a> </button>
+                    <c:url value="/api/delete_category/${category.id}/" var="api" />
+                    <button type="button" class="btn btn-danger" onclick="deleteObject('${api}')">Xóa</button>
+                </td>
+            </tr>
+        </c:forEach>
+    </tbody>
+</table>
+<script src="<c:url value="/js/main.js" />"></script>

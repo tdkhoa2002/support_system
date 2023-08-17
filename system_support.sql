@@ -22,11 +22,11 @@ USE `support_system` ;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `support_system`.`category` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(45) NOT NULL,
+  `name` VARCHAR(45) NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `name_UNIQUE` (`name` ASC) VISIBLE)
 ENGINE = InnoDB
-AUTO_INCREMENT = 4
+AUTO_INCREMENT = 10
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
@@ -36,14 +36,14 @@ COLLATE = utf8mb4_0900_ai_ci;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `support_system`.`faculty` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(45) NOT NULL,
-  `description` LONGTEXT NOT NULL,
-  `website_url` TEXT NOT NULL,
-  `video_url` TEXT NOT NULL,
+  `name` VARCHAR(45) NULL DEFAULT NULL,
+  `description` LONGTEXT NULL DEFAULT NULL,
+  `website_url` TEXT NULL DEFAULT NULL,
+  `video_url` TEXT NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `name_UNIQUE` (`name` ASC) VISIBLE)
 ENGINE = InnoDB
-AUTO_INCREMENT = 9
+AUTO_INCREMENT = 13
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
@@ -53,16 +53,16 @@ COLLATE = utf8mb4_0900_ai_ci;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `support_system`.`user` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `username` VARCHAR(255) NOT NULL,
-  `password` VARCHAR(255) NOT NULL,
-  `email` VARCHAR(255) NOT NULL,
-  `avatar` VARCHAR(255) NOT NULL,
-  `roleName` VARCHAR(45) NOT NULL,
+  `username` VARCHAR(255) NULL DEFAULT NULL,
+  `password` VARCHAR(255) NULL DEFAULT NULL,
+  `email` VARCHAR(255) NULL DEFAULT NULL,
+  `avatar` VARCHAR(255) NULL DEFAULT NULL,
+  `roleName` VARCHAR(45) NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `username_UNIQUE` (`username` ASC) VISIBLE,
   UNIQUE INDEX `email_UNIQUE` (`email` ASC) VISIBLE)
 ENGINE = InnoDB
-AUTO_INCREMENT = 17
+AUTO_INCREMENT = 20
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
@@ -72,12 +72,13 @@ COLLATE = utf8mb4_0900_ai_ci;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `support_system`.`article` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `title` VARCHAR(45) NOT NULL,
-  `content` LONGTEXT NOT NULL,
-  `date` DATETIME NOT NULL,
-  `user_id` INT NOT NULL,
-  `category_id` INT NOT NULL,
-  `faculty_id` INT NOT NULL,
+  `title` VARCHAR(45) NULL DEFAULT NULL,
+  `content` LONGTEXT NULL DEFAULT NULL,
+  `thumbnail` VARCHAR(255) NULL DEFAULT NULL,
+  `date` DATETIME NULL DEFAULT NULL,
+  `user_id` INT NULL DEFAULT NULL,
+  `category_id` INT NULL DEFAULT NULL,
+  `faculty_id` INT NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_article_user1_idx` (`user_id` ASC) VISIBLE,
   INDEX `fk_article_category1_idx` (`category_id` ASC) VISIBLE,
@@ -92,7 +93,19 @@ CREATE TABLE IF NOT EXISTS `support_system`.`article` (
     FOREIGN KEY (`user_id`)
     REFERENCES `support_system`.`user` (`id`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 14
+AUTO_INCREMENT = 18
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `support_system`.`banner`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `support_system`.`banner` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `thumbnail` VARCHAR(255) NULL DEFAULT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
@@ -102,10 +115,10 @@ COLLATE = utf8mb4_0900_ai_ci;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `support_system`.`comment` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `content` LONGTEXT NOT NULL,
-  `date` DATETIME NOT NULL,
-  `article_id` INT NOT NULL,
-  `user_id` INT NOT NULL,
+  `content` LONGTEXT NULL DEFAULT NULL,
+  `date` DATETIME NULL DEFAULT NULL,
+  `article_id` INT NULL DEFAULT NULL,
+  `user_id` INT NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_comment_article1_idx` (`article_id` ASC) VISIBLE,
   INDEX `fk_comment_user1_idx` (`user_id` ASC) VISIBLE,
@@ -116,7 +129,7 @@ CREATE TABLE IF NOT EXISTS `support_system`.`comment` (
     FOREIGN KEY (`user_id`)
     REFERENCES `support_system`.`user` (`id`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 15
+AUTO_INCREMENT = 26
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
@@ -126,14 +139,32 @@ COLLATE = utf8mb4_0900_ai_ci;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `support_system`.`livestream` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `title` TEXT NOT NULL,
-  `date` DATETIME NOT NULL,
-  `time` DOUBLE NOT NULL,
-  `thumbnail` VARCHAR(255) NOT NULL,
-  `faculty_id` INT NOT NULL,
+  `title` TEXT NULL DEFAULT NULL,
+  `date` DATETIME NULL DEFAULT NULL,
+  `time` DOUBLE NULL DEFAULT NULL,
+  `thumbnail` VARCHAR(255) NULL DEFAULT NULL,
+  `faculty_id` INT NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_livestream_faculty1_idx` (`faculty_id` ASC) VISIBLE,
   CONSTRAINT `fk_livestream_faculty1`
+    FOREIGN KEY (`faculty_id`)
+    REFERENCES `support_system`.`faculty` (`id`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 5
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `support_system`.`major`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `support_system`.`major` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(45) NULL DEFAULT NULL,
+  `faculty_id` INT NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_major_faculty1_idx` (`faculty_id` ASC) VISIBLE,
+  CONSTRAINT `fk_major_faculty1`
     FOREIGN KEY (`faculty_id`)
     REFERENCES `support_system`.`faculty` (`id`))
 ENGINE = InnoDB
@@ -147,10 +178,10 @@ COLLATE = utf8mb4_0900_ai_ci;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `support_system`.`question` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `content` TEXT NOT NULL,
-  `date_submitted` VARCHAR(45) NOT NULL,
-  `livestream_id` INT NOT NULL,
-  `user_id` INT NOT NULL,
+  `content` TEXT NULL DEFAULT NULL,
+  `date_submitted` VARCHAR(45) NULL DEFAULT NULL,
+  `livestream_id` INT NULL DEFAULT NULL,
+  `user_id` INT NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_question_livestream1_idx` (`livestream_id` ASC) VISIBLE,
   INDEX `fk_question_user1_idx` (`user_id` ASC) VISIBLE,
@@ -161,6 +192,7 @@ CREATE TABLE IF NOT EXISTS `support_system`.`question` (
     FOREIGN KEY (`user_id`)
     REFERENCES `support_system`.`user` (`id`))
 ENGINE = InnoDB
+AUTO_INCREMENT = 8
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
@@ -170,19 +202,19 @@ COLLATE = utf8mb4_0900_ai_ci;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `support_system`.`score` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `year` INT NOT NULL,
+  `year` INT NULL DEFAULT NULL,
   `score` DOUBLE NULL DEFAULT NULL,
-  `faculty_id` INT NOT NULL,
-  `category_id` INT NOT NULL,
+  `category_id` INT NULL DEFAULT NULL,
+  `major_id` INT NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_score_faculty1_idx` (`faculty_id` ASC) VISIBLE,
   INDEX `fk_score_category1_idx` (`category_id` ASC) VISIBLE,
+  INDEX `fk_score_major1_idx` (`major_id` ASC) VISIBLE,
   CONSTRAINT `fk_score_category1`
     FOREIGN KEY (`category_id`)
     REFERENCES `support_system`.`category` (`id`),
-  CONSTRAINT `fk_score_faculty1`
-    FOREIGN KEY (`faculty_id`)
-    REFERENCES `support_system`.`faculty` (`id`))
+  CONSTRAINT `fk_score_major1`
+    FOREIGN KEY (`major_id`)
+    REFERENCES `support_system`.`major` (`id`))
 ENGINE = InnoDB
 AUTO_INCREMENT = 14
 DEFAULT CHARACTER SET = utf8mb4

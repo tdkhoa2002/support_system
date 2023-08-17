@@ -15,5 +15,5 @@ import java.util.List;
  */
 public interface ScoreRepository {
     List<Score> getScoresLast();
-    boolean addOrUpdate(Score score, int yearPicked);
+    boolean addOrUpdate(Score score);
 }

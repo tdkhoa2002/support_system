@@ -12,7 +12,8 @@
 
 <c:url value="/admin/create_faculty" var="action" />
 
-<form:form method="POST" modelAttribute="faculty" action="${action}" enctype="multipart/form-data">
+<form:form method="POST" modelAttribute="faculty" action="${action}">
+    <form:hidden path="id"/>
     <label for="name">Tên khoa: </label>
     <form:input path="name" id="name" />
     <label for="description">Lời giới thiệu: </label>

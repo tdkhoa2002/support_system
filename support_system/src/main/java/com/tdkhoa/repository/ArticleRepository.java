@@ -13,6 +13,8 @@ import java.util.List;
  */
 public interface ArticleRepository {
     List<Article> getArticles();
+    List<Article> getArticlesByCateId(int id);
+    List<Article> getArticlesByFacultyId(int id);
     boolean addArticle(Article article);
     Article getArticleById(int id);
     boolean deleteArticle(int id);

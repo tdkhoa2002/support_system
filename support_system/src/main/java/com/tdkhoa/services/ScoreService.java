@@ -13,5 +13,5 @@ import java.util.List;
  */
 public interface ScoreService {
     List<Score> getScoresLast();
-    boolean saveOrUpdate(Score score, int yearPicked);
+    boolean saveOrUpdate(Score score);
 }

@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Other/javascript.js to edit this template
  */
 function deleteObject(path) {
+    console.log(path);
     if (confirm("Bạn chắc chắn muốn xóa tin này không?") === true) {
         fetch(path, {
             method: "DELETE"

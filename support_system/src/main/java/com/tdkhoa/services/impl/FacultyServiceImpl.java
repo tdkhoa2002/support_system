@@ -29,5 +29,15 @@ public class FacultyServiceImpl implements FacultyService {
     public List<Faculty> getFaculties() {
         return this.facultyRepo.getFaculties();
     }
+
+    @Override
+    public Faculty getFacultyById(int id) {
+        return this.facultyRepo.getFacultyById(id);
+    }
+
+    @Override
+    public boolean deleteFaculty(int id) {
+        return this.facultyRepo.deleteFaculty(id);
+    }
     
 }

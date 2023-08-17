@@ -4,6 +4,7 @@
  */
 package com.tdkhoa.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -16,7 +17,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -39,30 +39,25 @@ public class Score implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Basic(optional = false)
-    @NotNull
     @Column(name = "year")
-    private int year;
+    private Integer year;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "score")
     private Double score;
     @JoinColumn(name = "category_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @JsonIgnore
+    @ManyToOne
     private Category categoryId;
-    @JoinColumn(name = "faculty_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private Faculty facultyId;
+    @JoinColumn(name = "major_id", referencedColumnName = "id")
+    @JsonIgnore
+    @ManyToOne
+    private Major majorId;
 
     public Score() {
     }
 
     public Score(Integer id) {
         this.id = id;
-    }
-
-    public Score(Integer id, int year) {
-        this.id = id;
-        this.year = year;
     }
 
     public Integer getId() {
@@ -73,11 +68,11 @@ public class Score implements Serializable {
         this.id = id;
     }
 
-    public int getYear() {
+    public Integer getYear() {
         return year;
     }
 
-    public void setYear(int year) {
+    public void setYear(Integer year) {
         this.year = year;
     }
 
@@ -97,12 +92,12 @@ public class Score implements Serializable {
         this.categoryId = categoryId;
     }
 
-    public Faculty getFacultyId() {
-        return facultyId;
+    public Major getMajorId() {
+        return majorId;
     }
 
-    public void setFacultyId(Faculty facultyId) {
-        this.facultyId = facultyId;
+    public void setMajorId(Major majorId) {
+        this.majorId = majorId;
     }
 
     @Override

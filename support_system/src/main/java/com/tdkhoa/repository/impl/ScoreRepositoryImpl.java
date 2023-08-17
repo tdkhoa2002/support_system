@@ -32,15 +32,8 @@ public class ScoreRepositoryImpl implements ScoreRepository {
     private LocalSessionFactoryBean factory;
 
     @Override
-    public boolean addOrUpdate(Score score, int yearPicked) {
+    public boolean addOrUpdate(Score score) {
         Session s = this.factory.getObject().getCurrentSession();
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(yearPicked, Calendar.JANUARY, 1); // Month is 0-based, so January is 0
-
-        // Convert Calendar to Date
-        Date date = calendar.getTime();
-        score.setYear(yearPicked);
-
         try {
             if (score.getId() == null) {
                 s.save(score);

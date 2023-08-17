@@ -4,11 +4,11 @@
  */
 package com.tdkhoa.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -24,7 +24,6 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -51,30 +50,25 @@ public class Livestream implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Basic(optional = false)
-    @NotNull
     @Lob
-    @Size(min = 1, max = 65535)
+    @Size(max = 65535)
     @Column(name = "title")
     private String title;
-    @Basic(optional = false)
-    @NotNull
     @Column(name = "date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date date;
-    @Basic(optional = false)
-    @NotNull
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "time")
-    private double time;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 255)
+    private Double time;
+    @Size(max = 255)
     @Column(name = "thumbnail")
     private String thumbnail;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "livestreamId")
+    @JsonIgnore
+    @OneToMany(mappedBy = "livestreamId")
     private Set<Question> questionSet;
     @JoinColumn(name = "faculty_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @JsonIgnore
+    @ManyToOne
     private Faculty facultyId;
     @Transient
     private MultipartFile file;
@@ -84,14 +78,6 @@ public class Livestream implements Serializable {
 
     public Livestream(Integer id) {
         this.id = id;
-    }
-
-    public Livestream(Integer id, String title, Date date, double time, String thumbnail) {
-        this.id = id;
-        this.title = title;
-        this.date = date;
-        this.time = time;
-        this.thumbnail = thumbnail;
     }
 
     public Integer getId() {
@@ -118,11 +104,11 @@ public class Livestream implements Serializable {
         this.date = date;
     }
 
-    public double getTime() {
+    public Double getTime() {
         return time;
     }
 
-    public void setTime(double time) {
+    public void setTime(Double time) {
         this.time = time;
     }
 

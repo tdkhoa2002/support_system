@@ -21,8 +21,8 @@ public class ScoreServiceImpl implements ScoreService{
     private ScoreRepository scRepo;
 
     @Override
-    public boolean saveOrUpdate(Score score, int yearPicked) {
-        return scRepo.addOrUpdate(score, yearPicked);
+    public boolean saveOrUpdate(Score score) {
+        return scRepo.addOrUpdate(score);
     }
 
     @Override

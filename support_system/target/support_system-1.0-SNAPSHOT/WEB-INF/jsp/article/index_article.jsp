@@ -32,7 +32,7 @@
                 <td>
                     <button type="button" class="btn btn-primary"> <a href=" <c:url value="/view_article/${article.id}"/> ">Xem</a> </button>
                     <button type="button" class="btn btn-success"> <a href=" <c:url value="/admin/edit_article/${article.id}"/> ">Sửa</a> </button>
-                    <c:url value="/delete_article/${article.id}" var="api" />
+                    <c:url value="/api/delete_article/${article.id}/" var="api" />
                     <button type="button" class="btn btn-danger" onclick="deleteObject('${api}')">Xóa</button>
                 </td>
             </tr>

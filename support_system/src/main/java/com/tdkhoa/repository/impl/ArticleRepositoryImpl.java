@@ -68,4 +68,22 @@ public class ArticleRepositoryImpl implements ArticleRepository {
             return false;
         }
     }
+
+    @Override
+    public List<Article> getArticlesByCateId(int id) {
+        Session s = this.sessionFactory.getObject().getCurrentSession();
+        Query q = s.createQuery("SELECT a FROM Article a WHERE category_id = :category_id");
+        q.setParameter("category_id", id);
+
+        return q.getResultList();
+    }
+
+    @Override
+    public List<Article> getArticlesByFacultyId(int id) {
+        Session s = this.sessionFactory.getObject().getCurrentSession();
+        Query q = s.createQuery("SELECT a FROM Article a WHERE faculty_id = :faculty_id");
+        q.setParameter("faculty_id", id);
+
+        return q.getResultList();
+    }
 }

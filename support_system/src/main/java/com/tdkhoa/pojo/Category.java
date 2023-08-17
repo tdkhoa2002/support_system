@@ -4,10 +4,10 @@
  */
 package com.tdkhoa.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Set;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,7 +17,6 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -41,14 +40,14 @@ public class Category implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 45)
+    @Size(max = 45)
     @Column(name = "name")
     private String name;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "categoryId")
+    @JsonIgnore
+    @OneToMany(mappedBy = "categoryId")
     private Set<Score> scoreSet;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "categoryId")
+    @JsonIgnore
+    @OneToMany(mappedBy = "categoryId")
     private Set<Article> articleSet;
 
     public Category() {
@@ -56,11 +55,6 @@ public class Category implements Serializable {
 
     public Category(Integer id) {
         this.id = id;
-    }
-
-    public Category(Integer id, String name) {
-        this.id = id;
-        this.name = name;
     }
 
     public Integer getId() {
