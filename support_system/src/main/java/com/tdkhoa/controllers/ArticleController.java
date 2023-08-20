@@ -89,19 +89,19 @@ public class ArticleController {
         return "article/create_article";
     }
 
-    @PostMapping("/admin/create_article")
-    public String add(@ModelAttribute("article") Article article, BindingResult result, Authentication authentication) throws ParseException {
-        List<User> users = userService.getUsers(authentication.getName());
-
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
-        SimpleDateFormat parseFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
-
-        Date date = new Date();
-        
-        article.setDate(parseFormat.parse(dateFormat.format(date)));
-        article.setUserId(users.get(0));
-        
-        articleService.addArticle(article);
-        return "redirect: /support_system/admin/articles";
-    }
+//    @PostMapping("/admin/create_article")
+//    public String add(@ModelAttribute("article") Article article, BindingResult result, Authentication authentication) throws ParseException {
+//        List<User> users = userService.getUsers(authentication.getName());
+//
+//        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+//        SimpleDateFormat parseFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+//
+//        Date date = new Date();
+//        
+//        article.setDate(parseFormat.parse(dateFormat.format(date)));
+//        article.setUserId(users.get(0));
+//        
+//        articleService.addArticle(article);
+//        return "redirect: /support_system/admin/articles";
+//    }
 }

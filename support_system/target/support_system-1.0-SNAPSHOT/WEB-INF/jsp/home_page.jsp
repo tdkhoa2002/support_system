@@ -9,7 +9,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <h1>Trang chủ!</h1>
-<c:if test="${currentUser.roleName == 'ADMIN'}">
+<c:if test="${currentUser.roleName == 'ROLE_ADMIN'}">
     <div>
         <a href=" <c:url value="/admin"/>  ">Trang chủ admin</a>
     </div>

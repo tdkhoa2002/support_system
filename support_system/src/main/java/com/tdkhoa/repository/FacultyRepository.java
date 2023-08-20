@@ -12,7 +12,7 @@ import java.util.List;
  * @author Khoa Tran
  */
 public interface FacultyRepository {
-    boolean addFaculty(Faculty faculty);
+    Faculty addFaculty(Faculty faculty);
     Faculty getFacultyById(int id);
     List<Faculty> getFaculties();
     boolean deleteFaculty(int id);

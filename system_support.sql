@@ -26,7 +26,7 @@ CREATE TABLE IF NOT EXISTS `support_system`.`category` (
   PRIMARY KEY (`id`),
   UNIQUE INDEX `name_UNIQUE` (`name` ASC) VISIBLE)
 ENGINE = InnoDB
-AUTO_INCREMENT = 10
+AUTO_INCREMENT = 13
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
@@ -40,10 +40,11 @@ CREATE TABLE IF NOT EXISTS `support_system`.`faculty` (
   `description` LONGTEXT NULL DEFAULT NULL,
   `website_url` TEXT NULL DEFAULT NULL,
   `video_url` TEXT NULL DEFAULT NULL,
+  `image_url` VARCHAR(255) NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `name_UNIQUE` (`name` ASC) VISIBLE)
 ENGINE = InnoDB
-AUTO_INCREMENT = 13
+AUTO_INCREMENT = 18
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
@@ -62,7 +63,7 @@ CREATE TABLE IF NOT EXISTS `support_system`.`user` (
   UNIQUE INDEX `username_UNIQUE` (`username` ASC) VISIBLE,
   UNIQUE INDEX `email_UNIQUE` (`email` ASC) VISIBLE)
 ENGINE = InnoDB
-AUTO_INCREMENT = 20
+AUTO_INCREMENT = 22
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
@@ -93,7 +94,7 @@ CREATE TABLE IF NOT EXISTS `support_system`.`article` (
     FOREIGN KEY (`user_id`)
     REFERENCES `support_system`.`user` (`id`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 18
+AUTO_INCREMENT = 20
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
@@ -106,6 +107,7 @@ CREATE TABLE IF NOT EXISTS `support_system`.`banner` (
   `thumbnail` VARCHAR(255) NULL DEFAULT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB
+AUTO_INCREMENT = 18
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
@@ -150,7 +152,7 @@ CREATE TABLE IF NOT EXISTS `support_system`.`livestream` (
     FOREIGN KEY (`faculty_id`)
     REFERENCES `support_system`.`faculty` (`id`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 5
+AUTO_INCREMENT = 6
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
@@ -168,7 +170,7 @@ CREATE TABLE IF NOT EXISTS `support_system`.`major` (
     FOREIGN KEY (`faculty_id`)
     REFERENCES `support_system`.`faculty` (`id`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 2
+AUTO_INCREMENT = 7
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
@@ -216,7 +218,7 @@ CREATE TABLE IF NOT EXISTS `support_system`.`score` (
     FOREIGN KEY (`major_id`)
     REFERENCES `support_system`.`major` (`id`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 14
+AUTO_INCREMENT = 15
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 

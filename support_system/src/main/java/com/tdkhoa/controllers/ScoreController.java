@@ -67,8 +67,8 @@ public class ScoreController {
     }
 
     @PostMapping("admin/create_score")
-    public String save(@ModelAttribute("score") Score score, @RequestParam int yearPicked) throws ParseException {
-        this.scServ.saveOrUpdate(score, yearPicked);
+    public String save(@ModelAttribute("score") Score score) throws ParseException {
+        this.scServ.saveOrUpdate(score);
         return "redirect: /support_system/admin/scores";
     }
 }

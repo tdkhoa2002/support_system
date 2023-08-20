@@ -6,6 +6,7 @@ package com.tdkhoa.services.impl;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
+import com.tdkhoa.pojo.Faculty;
 import com.tdkhoa.pojo.Livestream;
 import com.tdkhoa.repository.LiveStreamRepository;
 import com.tdkhoa.services.LiveStreamService;
@@ -16,6 +17,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
@@ -34,16 +36,23 @@ public class LiveStreamServiceImpl implements LiveStreamService {
     }
 
     @Override
-    public boolean addOrUpdate(Livestream livestream) {
-//        if (!livestream.getFile().isEmpty()) {
-//            try {
-//                Map res = this.cloudinary.uploader().upload(livestream.getFile().getBytes(), ObjectUtils.asMap("resource_type", "auto"));
-//                livestream.setThumbnail(res.get("secure_url").toString());
-//            } catch (IOException ex) {
-//                Logger.getLogger(UserServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//        }
-        return this.liveRepo.addOrUpdate(livestream);
+    public Livestream addOrUpdate(Map<String, String> params, MultipartFile thumbnail, Faculty fal) {
+        Livestream liveS = new Livestream();
+        
+        liveS.setTitle(params.get("title"));
+        liveS.setTime(0.0);
+        liveS.setFacultyId(fal);
+        
+        if (!thumbnail.isEmpty()) {
+            try {
+                Map res = this.cloudinary.uploader().upload(thumbnail.getBytes(), ObjectUtils.asMap("resource_type", "auto"));
+                liveS.setThumbnail(res.get("secure_url").toString());
+            } catch (IOException ex) {
+                Logger.getLogger(UserServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        this.liveRepo.addOrUpdate(liveS);
+        return null;
     }
 
     @Override

@@ -20,8 +20,8 @@
     <label for="email">Email: </label>
     <form:input path="email" id="email" />
 
-    <label for="file">Ảnh sản phẩm</label>
-    <form:input type="file" path="file" id="file"  />
+    <label for="avatar">Avatar</label>
+    <form:input type="file" path="avatar" id="avatar"  />
 
     <input type="submit" />
 </form:form>

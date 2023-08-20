@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.core.env.Environment;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -17,8 +18,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
-import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
@@ -30,9 +29,11 @@ import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 @EnableWebSecurity
 @EnableTransactionManagement
 @ComponentScan(basePackages = {
+    "com.tdkhoa.controllers",
     "com.tdkhoa.repository",
     "com.tdkhoa.services"
 })
+@Order(2)
 public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
@@ -40,26 +41,12 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private UserDetailsService userDetailsService;
-
-//    @Autowired
-//    private AuthenticationSuccessHandler loginSuccessHandler;
-//
-//    @Autowired
-//    private LogoutSuccessHandler LogoutHandler;
+    
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
-//    @Bean
-//    public AuthenticationSuccessHandler loginSuccessHandler() {
-//        return new LoginSuccessHandler();
-//    }
-//
-//    @Bean
-//    public LogoutSuccessHandler logoutHandler() {
-//        return new LogoutHandler();
-//    }
+    
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.formLogin().loginPage("/login")
@@ -73,7 +60,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
         
         http.exceptionHandling().accessDeniedPage("/homepage?accessDenied");
         
-//        http.authorizeRequests().antMatchers("/").permitAll().antMatchers("/admin/**").access("hasRole('ADMIN')");
+//        http.authorizeRequests().antMatchers("/").permitAll().antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')");
 
         http.csrf().disable();
     }

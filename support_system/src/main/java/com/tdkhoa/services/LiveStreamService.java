@@ -4,8 +4,11 @@
  */
 package com.tdkhoa.services;
 
+import com.tdkhoa.pojo.Faculty;
 import com.tdkhoa.pojo.Livestream;
 import java.util.List;
+import java.util.Map;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
@@ -14,6 +17,6 @@ import java.util.List;
 public interface LiveStreamService {
     List<Livestream> getListLivestreams();
     Livestream getLivestreamById(int id);
-    boolean addOrUpdate(Livestream livestream);
+    Livestream addOrUpdate(Map<String, String> params, MultipartFile thumbnail, Faculty fal);
     boolean deleteLivestream(int id);
 }

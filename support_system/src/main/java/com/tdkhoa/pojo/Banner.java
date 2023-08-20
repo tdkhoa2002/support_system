@@ -41,8 +41,6 @@ public class Banner implements Serializable {
     @Size(max = 255)
     @Column(name = "thumbnail")
     private String thumbnail;
-    @Transient
-    private MultipartFile file;
 
     public Banner() {
     }
@@ -90,20 +88,6 @@ public class Banner implements Serializable {
     @Override
     public String toString() {
         return "com.tdkhoa.pojo.Banner[ id=" + id + " ]";
-    }
-
-    /**
-     * @return the file
-     */
-    public MultipartFile getFile() {
-        return file;
-    }
-
-    /**
-     * @param file the file to set
-     */
-    public void setFile(MultipartFile file) {
-        this.file = file;
     }
     
 }

@@ -23,6 +23,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
@@ -35,8 +36,7 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepo;
     @Autowired
     private PasswordEncoder passwordEncoder;
-    
-    
+
     @Autowired
     private Cloudinary cloudinary;
 
@@ -46,37 +46,36 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean addOrUpdateUser(User user) {
-        user.setPassword(this.passwordEncoder.encode(user.getPassword()));
+    public User addOrUpdateUser(Map<String, String> params, MultipartFile avatar) {
+        User user = new User();
+        user.setUsername(params.get("username"));
+        user.setPassword(this.passwordEncoder.encode(params.get("password")));
+        user.setEmail(params.get("email"));
         user.setRoleName(User.USER);
-//        if (!user.getFile().isEmpty()) {
-//            try {
-//                Map res = this.cloudinary.uploader().upload(user.getFile().getBytes(), ObjectUtils.asMap("resource_type", "auto"));
-//                user.setAvatar(res.get("secure_url").toString());
-//            } catch (IOException ex) {
-//                Logger.getLogger(UserServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//        }
-
-        return this.userRepo.addOrUpdateUser(user);
+        if (!avatar.isEmpty()) {
+            try {
+                Map res = this.cloudinary.uploader().upload(avatar.getBytes(), ObjectUtils.asMap("resource_type", "auto"));
+                user.setAvatar(res.get("secure_url").toString());
+            } catch (IOException ex) {
+                Logger.getLogger(UserServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        this.userRepo.addOrUpdateUser(user);
+        return user;
     }
 
-    
-    
     @Override
     public UserDetails loadUserByUsername(String string) throws UsernameNotFoundException {
         List<User> users = userRepo.getUsers(string);
         System.out.println("Cac user hien co: " + users);
-        
 
         if (users.isEmpty()) {
             throw new UsernameNotFoundException("Không tồn tại!");
         }
 
         User u = userRepo.getUser((users.get(0)).getId());
-        
+
         System.out.println("User: " + u.getRoleName());
-        
 
         Set<GrantedAuthority> authorities = new HashSet<>();
         authorities.add(new SimpleGrantedAuthority(u.getRoleName()));
@@ -92,5 +91,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> getAllUsers() {
         return this.userRepo.getAllUsers();
+    }
+
+    @Override
+    public boolean authUser(String username, String password) {
+        return this.userRepo.authUser(username, password);
     }
 }

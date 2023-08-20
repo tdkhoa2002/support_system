@@ -6,13 +6,15 @@ package com.tdkhoa.services;
 
 import com.tdkhoa.pojo.Faculty;
 import java.util.List;
+import java.util.Map;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
  * @author Khoa Tran
  */
 public interface FacultyService {
-    boolean addFaculty(Faculty faculty);
+    Faculty addFaculty(Map<String, String> params, MultipartFile image);
     List<Faculty> getFaculties();
     Faculty getFacultyById(int id);
     boolean deleteFaculty(int id);

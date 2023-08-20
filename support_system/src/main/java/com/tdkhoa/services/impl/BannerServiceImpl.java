@@ -16,6 +16,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
@@ -29,16 +30,18 @@ public class BannerServiceImpl implements BannerService {
     private Cloudinary cloudinary;
 
     @Override
-    public boolean addOrUpdate(Banner b) {
-//        if (!b.getFile().isEmpty()) {
-//            try {
-//                Map res = this.cloudinary.uploader().upload(b.getFile().getBytes(), ObjectUtils.asMap("resource_type", "auto"));
-//                b.setThumbnail(res.get("secure_url").toString());
-//            } catch (IOException ex) {
-//                Logger.getLogger(UserServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//        }
-        return this.bRepo.addOrUpdate(b);
+    public Banner addOrUpdate(Map<String, String> params, MultipartFile thumbnail) {
+        Banner banner = new Banner();
+        if (!thumbnail.isEmpty()) {
+            try {
+                Map res = this.cloudinary.uploader().upload(thumbnail.getBytes(), ObjectUtils.asMap("resource_type", "auto"));
+                banner.setThumbnail(res.get("secure_url").toString());
+            } catch (IOException ex) {
+                Logger.getLogger(UserServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        this.bRepo.addOrUpdate(banner);
+        return banner;
     }
 
     @Override

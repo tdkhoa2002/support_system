@@ -2,6 +2,7 @@ package com.tdkhoa.controllers;
 
 import com.tdkhoa.pojo.User;
 import com.tdkhoa.services.UserService;
+import java.util.Map;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -34,8 +35,8 @@ public class RegisterController {
     }
 
     @PostMapping("/register")
-    public String registerUser(@ModelAttribute User user, BindingResult rs) {
-        userService.addOrUpdateUser(user);
+    public String registerUser(Map<String, String> params, MultipartFile avatar, BindingResult rs) {
+//        userService.addOrUpdateUser(params, avatar);
 
         return "redirect:/login";
     }

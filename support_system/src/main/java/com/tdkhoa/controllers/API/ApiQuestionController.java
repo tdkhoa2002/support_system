@@ -27,21 +27,21 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api")
 public class ApiQuestionController {
-    @Autowired
-    private QuestionService questionServ;
-    @Autowired
-    private LiveStreamService liveServ;
+//    @Autowired
+//    private QuestionService questionServ;
+//    @Autowired
+//    private LiveStreamService liveServ;
     
-    @GetMapping("/questions/livestream/{livestream_id}/")
-    @CrossOrigin
-    public ResponseEntity<List<Question>> getCommentsOfArticle(@PathVariable(value = "livestream_id") int livestream_id) {
-        Livestream live = liveServ.getLivestreamById(livestream_id);
-        return new ResponseEntity<>(this.questionServ.getListQuestionsByLivestreamId(live), HttpStatus.OK);
-    }
-    
-    @DeleteMapping("/delete_question/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable(value = "id") int id) {
-        this.questionServ.deleteQuestion(id);
-    }
+//    @GetMapping("/questions/livestream/{livestream_id}/")
+//    @CrossOrigin
+//    public ResponseEntity<List<Question>> getCommentsOfArticle(@PathVariable(value = "livestream_id") int livestream_id) {
+//        Livestream live = liveServ.getLivestreamById(livestream_id);
+//        return new ResponseEntity<>(this.questionServ.getListQuestionsByLivestreamId(live), HttpStatus.OK);
+//    }
+//    
+//    @DeleteMapping("/delete_question/{id}")
+//    @ResponseStatus(HttpStatus.NO_CONTENT)
+//    public void delete(@PathVariable(value = "id") int id) {
+//        this.questionServ.deleteQuestion(id);
+//    }
 }

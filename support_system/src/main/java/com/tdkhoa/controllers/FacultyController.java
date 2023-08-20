@@ -44,10 +44,10 @@ public class FacultyController {
         return "faculty/create_faculty";
     }
     
-    @PostMapping("/admin/create_faculty")
-    public String create(@ModelAttribute Faculty faculty) {
-        facultyService.addFaculty(faculty);
-        //https://www.youtube.com/watch?v=6F6RGmVvfdM
-        return "redirect: /support_system/admin/faculties";
-    }
+//    @PostMapping("/admin/create_faculty")
+//    public String create(@ModelAttribute Faculty faculty) {
+//        facultyService.addFaculty(faculty);
+//        //https://www.youtube.com/watch?v=6F6RGmVvfdM
+//        return "redirect: /support_system/admin/faculties";
+//    }
 }

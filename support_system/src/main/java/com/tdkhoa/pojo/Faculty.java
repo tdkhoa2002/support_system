@@ -65,6 +65,9 @@ public class Faculty implements Serializable {
     @JsonIgnore
     @OneToMany(mappedBy = "facultyId")
     private Set<Livestream> livestreamSet;
+    @Size(max = 255)
+    @Column(name = "image_url")
+    private String image_url;
 
     public Faculty() {
     }
@@ -164,5 +167,19 @@ public class Faculty implements Serializable {
     public String toString() {
         return "com.tdkhoa.pojo.Faculty[ id=" + id + " ]";
     }
-    
+
+    /**
+     * @return the image_url
+     */
+    public String getImage_url() {
+        return image_url;
+    }
+
+    /**
+     * @param image_url the image_url to set
+     */
+    public void setImage_url(String image_url) {
+        this.image_url = image_url;
+    }
+
 }

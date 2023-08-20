@@ -54,11 +54,6 @@ public class WebApplicationContextConfig implements WebMvcConfigurer {
         return resolver;
     }
     
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder(); // Use BCrypt algorithm for password encoding
-    }
-    
     @Override
     public void addFormatters(FormatterRegistry r) {
         r.addFormatter(new FacultyFormatter());

@@ -16,6 +16,7 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,24 +30,15 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Autowired
     private LocalSessionFactoryBean factory;
+    @Autowired
+    private BCryptPasswordEncoder passEncoder;
 
     @Override
-    public boolean addOrUpdateUser(User user) {
+    public User addOrUpdateUser(User user) {
         Session s = this.factory.getObject().getCurrentSession();
+        s.save(user);
 
-        try {
-            if (user.getId() == null) {
-                s.save(user);
-            } else {
-                s.update(user);
-            }
-
-            return true;
-        } catch (HibernateException ex) {
-            ex.printStackTrace();
-        }
-        s.clear();
-        return false;
+        return user;
     }
 
     @Override
@@ -86,7 +78,7 @@ public class UserRepositoryImpl implements UserRepository {
         Session s = this.factory.getObject().getCurrentSession();
         Query q = s.createQuery("From User Where username=:un");
         q.setParameter("un", username);
-        
+
         return (User) q.getSingleResult();
     }
 
@@ -94,8 +86,15 @@ public class UserRepositoryImpl implements UserRepository {
     public List<User> getAllUsers() {
         Session s = this.factory.getObject().getCurrentSession();
         Query q = s.createQuery("SELECT u FROM User u");
-        
+
         return q.getResultList();
+    }
+
+    @Override
+    public boolean authUser(String username, String password) {
+        User u = this.getUserByUsername(username);
+
+        return this.passEncoder.matches(password, u.getPassword());
     }
 
 }

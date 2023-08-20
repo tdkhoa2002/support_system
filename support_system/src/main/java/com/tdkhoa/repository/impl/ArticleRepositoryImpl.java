@@ -7,6 +7,7 @@ package com.tdkhoa.repository.impl;
 import com.tdkhoa.pojo.Article;
 import com.tdkhoa.repository.ArticleRepository;
 import java.util.List;
+import java.util.Map;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
@@ -14,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
@@ -27,7 +29,7 @@ public class ArticleRepositoryImpl implements ArticleRepository {
     private LocalSessionFactoryBean sessionFactory;
 
     @Override
-    public boolean addArticle(Article article) {
+    public Article addArticle(Article article) {
         Session s = this.sessionFactory.getObject().getCurrentSession();
         try {
             if (article.getId() == null) {
@@ -35,11 +37,11 @@ public class ArticleRepositoryImpl implements ArticleRepository {
             } else {
                 s.update(article);
             }
-            return true;
+            return article;
         } catch (HibernateException ex) {
             ex.printStackTrace();
         }
-        return false;
+        return null;
     }
 
     @Override

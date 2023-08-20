@@ -78,8 +78,8 @@ public class Article implements Serializable {
     @JsonIgnore
     @ManyToOne
     private User userId;
-    @Transient
-    private MultipartFile file;
+//    @Transient
+//    private MultipartFile file;
 
     public Article() {
     }
@@ -186,18 +186,18 @@ public class Article implements Serializable {
         return "com.tdkhoa.pojo.Article[ id=" + id + " ]";
     }
 
-    /**
-     * @return the file
-     */
-    public MultipartFile getFile() {
-        return file;
-    }
-
-    /**
-     * @param file the file to set
-     */
-    public void setFile(MultipartFile file) {
-        this.file = file;
-    }
+//    /**
+//     * @return the file
+//     */
+//    public MultipartFile getFile() {
+//        return file;
+//    }
+//
+//    /**
+//     * @param file the file to set
+//     */
+//    public void setFile(MultipartFile file) {
+//        this.file = file;
+//    }
     
 }

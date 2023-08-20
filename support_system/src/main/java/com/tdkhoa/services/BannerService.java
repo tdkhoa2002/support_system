@@ -6,13 +6,15 @@ package com.tdkhoa.services;
 
 import com.tdkhoa.pojo.Banner;
 import java.util.List;
+import java.util.Map;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
  * @author Khoa Tran
  */
 public interface BannerService {
-    boolean addOrUpdate(Banner b);
+    Banner addOrUpdate(Map<String, String> params, MultipartFile thumbnail);
     boolean deleteBanner(int id);
     Banner getBannerById(int id);
     List<Banner> getAllBanners();

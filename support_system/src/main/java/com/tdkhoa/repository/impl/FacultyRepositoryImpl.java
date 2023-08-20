@@ -26,9 +26,8 @@ public class FacultyRepositoryImpl implements FacultyRepository{
     private LocalSessionFactoryBean factory;
 
     @Override
-    public boolean addFaculty(Faculty faculty) {
+    public Faculty addFaculty(Faculty faculty) {
         Session s = this.factory.getObject().getCurrentSession();
-
         try {
             if (faculty.getId() == null) {
                 s.save(faculty);
@@ -36,12 +35,12 @@ public class FacultyRepositoryImpl implements FacultyRepository{
                 s.update(faculty);
             }
 
-            return true;
+            return faculty;
         } catch (HibernateException ex) {
             ex.printStackTrace();
         }
         s.clear();
-        return false;
+        return null;
     }
 
     @Override

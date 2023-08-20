@@ -6,6 +6,8 @@ package com.tdkhoa.repository;
 
 import com.tdkhoa.pojo.Article;
 import java.util.List;
+import java.util.Map;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
@@ -15,7 +17,7 @@ public interface ArticleRepository {
     List<Article> getArticles();
     List<Article> getArticlesByCateId(int id);
     List<Article> getArticlesByFacultyId(int id);
-    boolean addArticle(Article article);
+    Article addArticle(Article article);
     Article getArticleById(int id);
     boolean deleteArticle(int id);
 }

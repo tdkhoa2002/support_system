@@ -66,20 +66,20 @@ public class LiveStreamController {
         return "livestream/create_livestream";
     }
 
-    @PostMapping("/admin/create_livestream")
-    public String add(@ModelAttribute("livestream") Livestream livestream, BindingResult result) throws ParseException {
+//    @PostMapping("/admin/create_livestream")
+//    public String add(@ModelAttribute("livestream") Livestream livestream, BindingResult result) throws ParseException {
 //        String dateStr = "10/09/2023T15:00";
 //        Date date = new SimpleDateFormat("dd/MM/yyyyThh:mm").parse(dateStr);
 //        livestream.setDate(date);
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
-        SimpleDateFormat parseFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
-        Date date = new Date();
-
-        livestream.setDate(parseFormat.parse(dateFormat.format(date)));
-        System.out.println("Title: " + livestream.getTitle());
-        System.out.println("Date: " + livestream.getDate());
-        System.out.println("Khoa: " + livestream.getFacultyId());
-        this.liveServ.addOrUpdate(livestream);
-        return "redirect: /support_system/admin/livestreams";
-    }
+//        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+//        SimpleDateFormat parseFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+//        Date date = new Date();
+//
+//        livestream.setDate(parseFormat.parse(dateFormat.format(date)));
+//        System.out.println("Title: " + livestream.getTitle());
+//        System.out.println("Date: " + livestream.getDate());
+//        System.out.println("Khoa: " + livestream.getFacultyId());
+//        this.liveServ.addOrUpdate(livestream);
+//        return "redirect: /support_system/admin/livestreams";
+//    }
 }
