@@ -31,7 +31,8 @@ import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 @ComponentScan(basePackages = {
     "com.tdkhoa.controllers",
     "com.tdkhoa.repository",
-    "com.tdkhoa.services"
+    "com.tdkhoa.services",
+    "com.tdkhoa.components"
 })
 @Order(2)
 public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
