@@ -6,6 +6,7 @@ package com.tdkhoa.pojo;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,6 +19,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -44,9 +47,9 @@ public class Question implements Serializable {
     @Size(max = 65535)
     @Column(name = "content")
     private String content;
-    @Size(max = 45)
     @Column(name = "date_submitted")
-    private String dateSubmitted;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dateSubmitted;
     @JoinColumn(name = "livestream_id", referencedColumnName = "id")
     @JsonIgnore
     @ManyToOne
@@ -77,14 +80,6 @@ public class Question implements Serializable {
 
     public void setContent(String content) {
         this.content = content;
-    }
-
-    public String getDateSubmitted() {
-        return dateSubmitted;
-    }
-
-    public void setDateSubmitted(String dateSubmitted) {
-        this.dateSubmitted = dateSubmitted;
     }
 
     public Livestream getLivestreamId() {
@@ -126,6 +121,20 @@ public class Question implements Serializable {
     @Override
     public String toString() {
         return "com.tdkhoa.pojo.Question[ id=" + id + " ]";
+    }
+
+    /**
+     * @return the dateSubmitted
+     */
+    public Date getDateSubmitted() {
+        return dateSubmitted;
+    }
+
+    /**
+     * @param dateSubmitted the dateSubmitted to set
+     */
+    public void setDateSubmitted(Date dateSubmitted) {
+        this.dateSubmitted = dateSubmitted;
     }
     
 }

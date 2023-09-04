@@ -31,20 +31,13 @@ public class QuestionController {
     
     @PostMapping("/send_question")
     public String save(Model model, @ModelAttribute Question question, @RequestParam int liveId, BindingResult rs) {
-        String msg = "";
-        Livestream lstream = liveServ.getLivestreamById(liveId);
         
-        LocalDateTime now = LocalDateTime.now();
-        question.setDateSubmitted(now.toString());
-        question.setLivestreamId(lstream);
-        
-        if(this.qServ.saveOrUpdate(question)) {
-            msg = "Đặt câu hỏi thành công. Cảm ơn bạn đã đặt câu hỏi !";
-        }
-        else {
-            msg = "Đặt câu hỏi thất bại. Lỗi hệ thống !";
-        }
-        model.addAttribute("msg", msg);
+//        if(this.qServ.saveOrUpdate(question)) {
+//            msg = "Đặt câu hỏi thành công. Cảm ơn bạn đã đặt câu hỏi !";
+//        }
+//        else {
+//            msg = "Đặt câu hỏi thất bại. Lỗi hệ thống !";
+//        }
         return "redirect: /support_system/homepage";
     }
 }

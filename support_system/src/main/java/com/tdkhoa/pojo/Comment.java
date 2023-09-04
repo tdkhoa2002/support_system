@@ -51,11 +51,11 @@ public class Comment implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date date;
     @JoinColumn(name = "article_id", referencedColumnName = "id")
-    @JsonIgnore
+//    @JsonIgnore
     @ManyToOne
     private Article articleId;
     @JoinColumn(name = "user_id", referencedColumnName = "id")
-    @JsonIgnore
+//    @JsonIgnore
     @ManyToOne
     private User userId;
 

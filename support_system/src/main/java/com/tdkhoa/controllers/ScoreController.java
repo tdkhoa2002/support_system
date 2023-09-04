@@ -68,7 +68,7 @@ public class ScoreController {
 
     @PostMapping("admin/create_score")
     public String save(@ModelAttribute("score") Score score) throws ParseException {
-        this.scServ.saveOrUpdate(score);
+//        this.scServ.saveOrUpdate(score);
         return "redirect: /support_system/admin/scores";
     }
 }

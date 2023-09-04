@@ -37,11 +37,22 @@ public class LiveStreamServiceImpl implements LiveStreamService {
 
     @Override
     public Livestream addOrUpdate(Map<String, String> params, MultipartFile thumbnail, Faculty fal) {
-        Livestream liveS = new Livestream();
-        
-        liveS.setTitle(params.get("title"));
+        int liveId;
+        Livestream liveS;
+        if(params.get("id") != null) {
+            liveId = Integer.parseInt(params.get("id"));
+            liveS = liveRepo.getLivestreamById(liveId);
+        }
+        else {
+            liveS = new Livestream();
+        }
+        if(params.containsKey("title")) {
+            liveS.setTitle(params.get("title"));
+        }
         liveS.setTime(0.0);
-        liveS.setFacultyId(fal);
+        if(params.containsKey("faculty_id")) {
+            liveS.setFacultyId(fal);
+        }
         
         if (!thumbnail.isEmpty()) {
             try {

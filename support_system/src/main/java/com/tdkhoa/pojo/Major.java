@@ -49,7 +49,7 @@ public class Major implements Serializable {
     @OneToMany(mappedBy = "majorId")
     private Set<Score> scoreSet;
     @JoinColumn(name = "faculty_id", referencedColumnName = "id")
-    @JsonIgnore
+//    @JsonIgnore
     @ManyToOne
     private Faculty facultyId;
 

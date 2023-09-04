@@ -48,6 +48,7 @@ public class ApiFacultyController {
     }
     
     @DeleteMapping("/delete_faculty/{faculty_id}")
+    @CrossOrigin
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable(value = "faculty_id") int faculty_id) {
         this.facultyServ.deleteFaculty(faculty_id);

@@ -4,15 +4,18 @@
  */
 package com.tdkhoa.services;
 
+import com.tdkhoa.pojo.Article;
 import com.tdkhoa.pojo.Comment;
+import com.tdkhoa.pojo.User;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
  * @author Khoa Tran
  */
 public interface CommentService {
-    boolean addOrUpdateComment(Comment comment);
+    Comment addOrUpdateComment(Map<String, String> params, Article article, User user);
     List<Comment> getCommentsByArticleId(int id);
     Comment getCommentById(int id);
     boolean deleteConment(int id);

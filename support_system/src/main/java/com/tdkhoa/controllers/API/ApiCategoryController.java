@@ -49,7 +49,7 @@ public class ApiCategoryController {
 
     @DeleteMapping("/delete_category/{cate_id}/")
     @CrossOrigin
-    public ResponseEntity<String> add(@PathVariable(value = "cate_id") int cate_id) {
+    public ResponseEntity<String> delete(@PathVariable(value = "cate_id") int cate_id) {
         
         List<Article> articles = aServ.getArticlesByCateId(cate_id);
         for(Article a: articles) {

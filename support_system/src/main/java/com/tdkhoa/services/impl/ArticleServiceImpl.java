@@ -37,15 +37,33 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public Article addArticle(Map<String, String> params, MultipartFile thumbnail, User user, Faculty faculty, Category cate) {
         Date currentDate = new Date();
-        Article article = new Article();
-//        User user = uRepo.getUser(userId);
-        
-        article.setTitle(params.get("title"));
-        article.setContent(params.get("content"));
-        article.setDate(currentDate);
-        article.setUserId(user);
-        article.setFacultyId(faculty);
-        article.setCategoryId(cate);
+        int articleId;
+        Article article;
+        if(params.get("id") != null) {
+            articleId = Integer.parseInt(params.get("id"));
+            article = this.articleRepository.getArticleById(articleId);
+        }
+        else {
+            article = new Article();
+        }
+        if(params.containsKey("title")) {
+            article.setTitle(params.get("title"));
+        }
+        if(params.containsKey("content")) {
+            article.setContent(params.get("content"));
+        }
+        if(params.containsKey("date")) {
+            article.setDate(currentDate);
+        }
+        if(params.containsKey("user_id")) {
+            article.setUserId(user);
+        }
+        if(params.containsKey("faculty_id")) {
+            article.setFacultyId(faculty);
+        }
+        if(params.containsKey("category_id")) {
+            article.setCategoryId(cate);
+        }
         if (!thumbnail.isEmpty()) {
             try {
                 Map res = this.cloudinary.uploader().upload(thumbnail.getBytes(), ObjectUtils.asMap("resource_type", "auto"));

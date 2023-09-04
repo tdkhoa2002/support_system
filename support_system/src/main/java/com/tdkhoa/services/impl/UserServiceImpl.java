@@ -60,6 +60,9 @@ public class UserServiceImpl implements UserService {
                 Logger.getLogger(UserServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+        else {
+            user.setAvatar(null);
+        }
         this.userRepo.addOrUpdateUser(user);
         return user;
     }

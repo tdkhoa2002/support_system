@@ -48,7 +48,7 @@ public class CommentController {
         comment.setArticleId(article);
         comment.setUserId(users.get(0));
         
-        this.cmtService.addOrUpdateComment(comment);
+//        this.cmtService.addOrUpdateComment(comment);
         return "redirect: /support_system/view_article/{article_id}";
     }
 }

@@ -15,5 +15,7 @@ import java.util.List;
  */
 public interface ScoreRepository {
     List<Score> getScoresLast();
+    Score getScoreById(int id);
     boolean addOrUpdate(Score score);
+    boolean deleteScore(int id);
 }

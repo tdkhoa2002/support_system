@@ -50,19 +50,18 @@ public class ApiLivestreamController {
     @PostMapping("/create_livestream/")
     @CrossOrigin
     public ResponseEntity<Livestream> add(@RequestParam Map<String, String> params, @RequestPart MultipartFile thumbnail) throws ParseException {
+        
         Faculty faculty = falcultyServ.getFacultyById(Integer.parseInt(params.get("facultyId")));
         String pattern = "yyyy-MM-dd HH:mm:ss";
-
         SimpleDateFormat dateFormat = new SimpleDateFormat(pattern);
         Date date = dateFormat.parse(params.get("date"));
-        
-        System.out.println(date);
         
         Livestream liveS = this.liveServ.addOrUpdate(params, thumbnail, faculty);
         return new ResponseEntity<>(liveS, HttpStatus.CREATED);
     }
     
     @DeleteMapping("/delete_comment/{livestream_id}")
+    @CrossOrigin
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable(value = "livestream_id") int livestream_id) {
         this.liveServ.deleteLivestream(livestream_id);

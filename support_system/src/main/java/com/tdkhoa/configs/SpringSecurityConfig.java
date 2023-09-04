@@ -6,6 +6,7 @@ package com.tdkhoa.configs;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
+import java.text.SimpleDateFormat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -93,5 +94,9 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 //        cloudinary.cloud_name = de3yhowd4
 //        cloudinary.api_key = 945421312381893
 //        cloudinary.api_secret = JbKRQ8KcHDDW9fSYDyYwiq4nmEo
+    }
+    
+    public SimpleDateFormat simpleDateFormat() {
+        return new SimpleDateFormat("yyyy-MM-dd");
     }
 }

@@ -5,6 +5,7 @@
 package com.tdkhoa.repository.impl;
 
 import com.tdkhoa.pojo.Category;
+import com.tdkhoa.pojo.Comment;
 import com.tdkhoa.pojo.Faculty;
 import com.tdkhoa.pojo.Score;
 import com.tdkhoa.repository.ScoreRepository;
@@ -66,4 +67,25 @@ public class ScoreRepositoryImpl implements ScoreRepository {
 //FROM Diem d
 //WHERE d.nam BETWEEN YEAR(CURRENT_DATE) - 5 AND YEAR(CURRENT_DATE)
 //ORDER BY d.nam DESC;
+
+    @Override
+    public boolean deleteScore(int id) {
+        Session s = this.factory.getObject().getCurrentSession();
+        try {
+            Score score = this.getScoreById(id);
+            s.delete(score);
+            return true;
+        } catch (HibernateException ex) {
+            ex.printStackTrace();
+            return false;
+        }
+    }
+
+    @Override
+    public Score getScoreById(int id) {
+        Session s = this.factory.getObject().getCurrentSession();
+        return s.get(Score.class, id);
+    }
 }
+
+

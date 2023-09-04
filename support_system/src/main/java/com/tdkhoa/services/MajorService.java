@@ -4,8 +4,10 @@
  */
 package com.tdkhoa.services;
 
+import com.tdkhoa.pojo.Faculty;
 import com.tdkhoa.pojo.Major;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -14,6 +16,6 @@ import java.util.List;
 public interface MajorService {
     List<Major> getMajors();
     Major getMajorById(int major_id);
-    boolean addOrUpdate(Major major);
+    Major addOrUpdate(Map<String, String> params, Faculty f);
     boolean deleteMajor(int major_id);
 }

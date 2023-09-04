@@ -70,8 +70,6 @@ public class Livestream implements Serializable {
     @JsonIgnore
     @ManyToOne
     private Faculty facultyId;
-    @Transient
-    private MultipartFile file;
 
     public Livestream() {
     }
@@ -161,19 +159,4 @@ public class Livestream implements Serializable {
     public String toString() {
         return "com.tdkhoa.pojo.Livestream[ id=" + id + " ]";
     }
-
-    /**
-     * @return the file
-     */
-    public MultipartFile getFile() {
-        return file;
-    }
-
-    /**
-     * @param file the file to set
-     */
-    public void setFile(MultipartFile file) {
-        this.file = file;
-    }
-    
 }

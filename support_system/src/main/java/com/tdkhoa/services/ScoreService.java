@@ -4,8 +4,11 @@
  */
 package com.tdkhoa.services;
 
+import com.tdkhoa.pojo.Category;
+import com.tdkhoa.pojo.Major;
 import com.tdkhoa.pojo.Score;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -13,5 +16,6 @@ import java.util.List;
  */
 public interface ScoreService {
     List<Score> getScoresLast();
-    boolean saveOrUpdate(Score score);
+    Score saveOrUpdate(Map<String, String> params, Category cate, Major major);
+    boolean deleteScore(int id);
 }

@@ -31,12 +31,27 @@ public class FacultyServiceImpl implements FacultyService {
 
     @Override
     public Faculty addFaculty(Map<String, String> params, MultipartFile image) {
-        Faculty faculty = new Faculty();
-        
-        faculty.setName(params.get("name"));
-        faculty.setDescription(params.get("description"));
-        faculty.setWebsiteUrl(params.get("website_url"));
-        faculty.setImage_url(params.get("video_url"));
+        int facultyId;
+        Faculty faculty;
+        if(params.get("id") != null) {
+            facultyId = Integer.parseInt(params.get("id"));
+            faculty = this.facultyRepo.getFacultyById(facultyId);
+        }
+        else {
+            faculty = new Faculty();
+        }
+        if(params.containsKey("name")) {
+            faculty.setName(params.get("name"));
+        }
+        if(params.containsKey("description")) {
+            faculty.setDescription(params.get("description"));
+        }
+        if(params.containsKey("website_url")) {
+            faculty.setWebsiteUrl(params.get("website_url"));
+        }
+        if(params.containsKey("video_url")) {
+            faculty.setVideoUrl(params.get("video_url"));
+        }
         
          if (!image.isEmpty()) {
             try {

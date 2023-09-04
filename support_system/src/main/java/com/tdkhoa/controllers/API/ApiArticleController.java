@@ -87,6 +87,7 @@ public class ApiArticleController {
     }
     
     @DeleteMapping("/delete_article/{id}")
+    @CrossOrigin
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable(value = "id") int id) {
         this.articleService.deleteArticle(id);

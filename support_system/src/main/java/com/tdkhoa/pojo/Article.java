@@ -67,15 +67,15 @@ public class Article implements Serializable {
     @OneToMany(mappedBy = "articleId")
     private Set<Comment> commentSet;
     @JoinColumn(name = "category_id", referencedColumnName = "id")
-    @JsonIgnore
+//    @JsonIgnore
     @ManyToOne
     private Category categoryId;
     @JoinColumn(name = "faculty_id", referencedColumnName = "id")
-    @JsonIgnore
+//    @JsonIgnore
     @ManyToOne
     private Faculty facultyId;
     @JoinColumn(name = "user_id", referencedColumnName = "id")
-    @JsonIgnore
+//    @JsonIgnore
     @ManyToOne
     private User userId;
 //    @Transient

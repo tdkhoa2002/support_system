@@ -4,10 +4,12 @@
  */
 package com.tdkhoa.services.impl;
 
+import com.tdkhoa.pojo.Faculty;
 import com.tdkhoa.pojo.Major;
 import com.tdkhoa.repository.MajorRepository;
 import com.tdkhoa.services.MajorService;
 import java.util.List;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +19,9 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class MajorServiceImpl implements MajorService {
-    @Autowired MajorRepository mjRepo;
+
+    @Autowired
+    MajorRepository mjRepo;
 
     @Override
     public List<Major> getMajors() {
@@ -30,13 +34,33 @@ public class MajorServiceImpl implements MajorService {
     }
 
     @Override
-    public boolean addOrUpdate(Major major) {
-        return this.mjRepo.addOrUpdate(major);
+    public Major addOrUpdate(Map<String, String> params, Faculty f) {
+        int majorId;
+        Major major;
+        if(params.get("id") != null) {
+            major = this.mjRepo.getMajorById(Integer.parseInt(params.get("id")));
+        }
+        else {
+            major = new Major();
+        }
+        if(params.containsKey("name")) {
+            major.setName(params.get("name"));
+        }
+        if(params.containsKey("faculty_id")) {
+            major.setFacultyId(f);
+        }
+//        Major major = new Major();
+//        
+//        major.setName(params.get("name"));
+//        major.setFacultyId(f);
+        
+        this.mjRepo.addOrUpdate(major);
+        return major;
     }
 
     @Override
     public boolean deleteMajor(int major_id) {
         return this.mjRepo.deleteMajor(major_id);
     }
-    
+
 }
