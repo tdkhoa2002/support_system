@@ -48,6 +48,12 @@ public class ApiArticleController {
     @Autowired
     private UserService uServ;
     
+    @RequestMapping("/articles/search/")
+    @CrossOrigin
+    public ResponseEntity<List<Article>> search(@RequestParam Map<String, String> params) {
+        return new ResponseEntity<>(this.articleService.searchArticles(params), HttpStatus.OK);
+    }
+    
     @GetMapping("/articles/")
     @CrossOrigin
     public ResponseEntity<List<Article>> list() {

@@ -100,4 +100,9 @@ public class ArticleServiceImpl implements ArticleService {
     public List<Article> getArticlesByFacultyId(int id) {
         return this.articleRepository.getArticlesByFacultyId(id);
     }
+
+    @Override
+    public List<Article> searchArticles(Map<String, String> params) {
+        return this.articleRepository.searchArticles(params);
+    }
 }

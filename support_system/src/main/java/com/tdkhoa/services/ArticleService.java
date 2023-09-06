@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
  * @author Khoa Tran
  */
 public interface ArticleService {
+    List<Article> searchArticles(Map<String, String> params);
     List<Article> getArticles();
     List<Article> getArticlesByCateId(int id);
     List<Article> getArticlesByFacultyId(int id);

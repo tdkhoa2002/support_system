@@ -11,6 +11,9 @@ import com.tdkhoa.pojo.Livestream;
 import com.tdkhoa.repository.LiveStreamRepository;
 import com.tdkhoa.services.LiveStreamService;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
@@ -50,8 +53,21 @@ public class LiveStreamServiceImpl implements LiveStreamService {
             liveS.setTitle(params.get("title"));
         }
         liveS.setTime(0.0);
-        if(params.containsKey("faculty_id")) {
+        if(params.containsKey("facultyId")) {
             liveS.setFacultyId(fal);
+        }
+        
+        String pattern = "yyyy-MM-dd HH:mm:ss";
+        SimpleDateFormat dateFormat = new SimpleDateFormat(pattern);
+        Date date = null;
+        try {
+            date = dateFormat.parse(params.get("date"));
+        } catch (ParseException ex) {
+            Logger.getLogger(LiveStreamServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        if(params.containsKey("date")) {
+            liveS.setDate(date);
         }
         
         if (!thumbnail.isEmpty()) {
